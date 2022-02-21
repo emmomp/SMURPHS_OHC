@@ -103,9 +103,9 @@ for index, row in df.iterrows():
                             ohc_datasets[basin].append(data_masked.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)
                             
                             data_masked_binned = data_masked.groupby_bins(data.deptht,depthbins,labels=depthlabels)
-                            ohc_bydepth_datasets[basin].append(data_masked_binned.sum(dim=['x','y','deptht'])*rho_0*c_p)  
+                            ohc_bydepth_datasets[basin].append(data_masked_binned.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)  
 
-                except: #Some of the time data doesn't read nicely
+                except: #Some of the coords aren't correct in some files
                     print('Reading files individually')
                     for file in afiles:
                         with xr.open_dataset(file) as data:
@@ -126,7 +126,7 @@ for index, row in df.iterrows():
                                 ohc_datasets[basin].append(data_masked.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)
                                 
                                 data_masked_binned = data_masked.groupby_bins(data.deptht,depthbins,labels=depthlabels)
-                                ohc_bydepth_datasets[basin].append(data_masked_binned.sum(dim=['x','y','deptht'])*rho_0*c_p)  
+                                ohc_bydepth_datasets[basin].append(data_masked_binned.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)  
 
                         
             print('Combining, loading, and writing to file')
