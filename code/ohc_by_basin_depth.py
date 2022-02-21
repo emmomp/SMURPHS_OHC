@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 ohc_by_basin_depth.py
@@ -55,7 +55,6 @@ basin_longname={
         'atl':'Atlantic',
         'ind':'Indian',
         'pac':'Pacific',
-        'na':'North Atlantic region (Latitude: [45°N, 67°N] Longitude: [100°W, 20°E] Depth: top 1056m)'
         }
 
 # Generate dataframe with all temp data
