@@ -81,8 +81,8 @@ for index, row in df.iterrows():
         print('Found ',len(files),' files')
         if len(files)==1980:
             # Split file list into slices of 50 to stop massive slowdown
-            file_slices= map(None, *(iter(files),) * 50)
-            file_slices[-1]=[y for y in file_slices[-1] if y != None]  
+            nf=50
+            file_slices=[files[i:i + nf] for i in range(0, len(files), nf)]
             #Initialise lists to hold data
             ohc_datasets={}
             ohc_bydepth_datasets={}
@@ -103,9 +103,9 @@ for index, row in df.iterrows():
                             ohc_datasets[basin].append(data_masked.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)
                             
                             data_masked_binned = data_masked.groupby_bins(data.deptht,depthbins,labels=depthlabels)
-                            ohc_bydepth_datasets[basin].append(data_masked_binned.sum(dim=['x','y','deptht'])*rho_0*c_p)  
+                            ohc_bydepth_datasets[basin].append(data_masked_binned.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)  
 
-                except: #Some of the time data doesn't read nicely
+                except: #Some of the coords aren't correct in some files
                     print('Reading files individually')
                     for file in afiles:
                         with xr.open_dataset(file) as data:
@@ -126,7 +126,7 @@ for index, row in df.iterrows():
                                 ohc_datasets[basin].append(data_masked.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)
                                 
                                 data_masked_binned = data_masked.groupby_bins(data.deptht,depthbins,labels=depthlabels)
-                                ohc_bydepth_datasets[basin].append(data_masked_binned.sum(dim=['x','y','deptht'])*rho_0*c_p)  
+                                ohc_bydepth_datasets[basin].append(data_masked_binned.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)  
 
                         
             print('Combining, loading, and writing to file')
