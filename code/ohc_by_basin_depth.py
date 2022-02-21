@@ -93,7 +93,7 @@ for index, row in df.iterrows():
             for a,afiles in enumerate(file_slices):
                 print('Slice ',a)
                 try: 
-                    with xr.open_mfdataset(afiles,preprocess=preproc_data,concat_dim='time_counter') as data:
+                    with xr.open_mfdataset(afiles,preprocess=preproc_data,concat_dim='time_counter',combine='combine_nested') as data:
                         print('Got data, calculating ohc')
                         data_weighted = data*vol
                     
@@ -102,8 +102,8 @@ for index, row in df.iterrows():
                             data_masked = data_weighted.where(basin_masks[basin])
                             ohc_datasets[basin].append(data_masked.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)
                             
-                            data_masked_binned = data_masked.groupby_bins(data.deptht,depthbins,labels=depthlabels)
-                            ohc_bydepth_datasets[basin].append(data_masked_binned.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)  
+                            data_masked_binned = data_masked.thetao.groupby_bins(data.deptht,depthbins,labels=depthlabels)
+                            ohc_bydepth_datasets[basin].append(data_masked_binned.sum(dim=['x','y','deptht'])*rho_0*c_p)  
 
                 except: #Some of the coords aren't correct in some files
                     print('Reading files individually')
@@ -125,8 +125,8 @@ for index, row in df.iterrows():
                                 data_masked = data_weighted.where(basin_masks[basin])
                                 ohc_datasets[basin].append(data_masked.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)
                                 
-                                data_masked_binned = data_masked.groupby_bins(data.deptht,depthbins,labels=depthlabels)
-                                ohc_bydepth_datasets[basin].append(data_masked_binned.thetao.sum(dim=['x','y','deptht'])*rho_0*c_p)  
+                                data_masked_binned = data_masked.thetao.groupby_bins(data.deptht,depthbins,labels=depthlabels)
+                                ohc_bydepth_datasets[basin].append(data_masked_binned.sum(dim=['x','y','deptht'])*rho_0*c_p)  
 
                         
             print('Combining, loading, and writing to file')
