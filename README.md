@@ -3,4 +3,4 @@ Notebooks to reproduce figures from "Ocean Heat Content responses to changing An
 
 Feel free to use or reproduce code or figures, but please attribute as outlined in the license.
 
-E Boland Feb 2022 [emmomp@bas.ac.uk](email:emmomp@bas.ac.uk)
+E Boland Feb 2022 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
