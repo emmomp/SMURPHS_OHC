@@ -81,8 +81,8 @@ for index, row in df.iterrows():
         print('Found ',len(files),' files')
         if len(files)==1980:
             # Split file list into slices of 50 to stop massive slowdown
-            file_slices= map(None, *(iter(files),) * 50)
-            file_slices[-1]=[y for y in file_slices[-1] if y != None]  
+            nf=50
+            file_slices=[files[i:i + nf] for i in range(0, len(files), nf)]
             #Initialise lists to hold data
             ohc_datasets={}
             ohc_bydepth_datasets={}
