@@ -7,26 +7,9 @@ Created on Mon Jan 20 15:59:43 2020
 """
 from scipy import signal
 import numpy as np
-import matplotlib as mpl
-mpl.use('Agg')
-import matplotlib.pyplot as plt
-from pandas.plotting import register_matplotlib_converters
-register_matplotlib_converters()
 import xarray as xr
 from scipy import stats
-import cartopy.crs as ccrs
-import cartopy.feature as cf
-import pyresample
-#import nc_time_axis
 
-figs_dir = '../plots/smurphs_ensemble/'
-
-y_start=[1960,1980]
-y_end=[1991,2011]
-y_mid=[1975.5,1995.5]
-depthlabels=['0-700m','0-2000m']
-
-griddata = xr.open_dataset('~/smurphs_ensemble/for_Dan/nemo_at491o_1m_19991201-20000101_grid-T.nc')
 
 ##Create 4th order Bworth filter
 def butter_lowpass(data,cut,order=4,sample_freq=1) :
