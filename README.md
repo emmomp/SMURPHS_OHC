@@ -1,6 +1,6 @@
 # SMURPHS_OHC
 
-figure_notebooks: Jupyter notebooks to reproduce figures from "Ocean Heat Content responses to changing Anthropogenic Aerosol Forcing Strength: regional and multi-decadal variability" Boland et al 2022 (doi coming).
+figure_notebooks: Jupyter notebooks to reproduce figures (and one table) from "Ocean Heat Content responses to changing Anthropogenic Aerosol Forcing Strength: regional and multi-decadal variability" Boland et al 2022 (doi coming).
 
 Each notebook loads data from ../data_in/. To work, data_in should contain the files from [figshare details]. Alternatively this data can be re-generated using the python files in the code directory - see below.
 
