@@ -9,7 +9,7 @@ from scipy import signal
 import numpy as np
 import xarray as xr
 from scipy import stats
-
+import statsmodels.api as sm
 
 ##Create 4th order Bworth filter
 def butter_lowpass(data,cut,order=4,sample_freq=1) :
@@ -61,6 +61,17 @@ def lin_regress(time,ohc,indims,dtype='float64'):
     )
     stats['parameter']=('parameter',["slope","intercept","r_value","p_value","std_err"])
     return stats
+
+def new_weighted_linregress(x,y,w):
+    # Wrapper around scipy linregress to use in apply_ufunc
+    mod_wls = sm.WLS(y.data,sm.add_constant(x.data), weights=1.0 / (w.data ** 2))
+    res_wls=mod_wls.fit()
+    slope=res_wls.params[1]
+    intercept=res_wls.params[0]
+    r_value=np.sqrt(res_wls.rsquared)
+    p_value=res_wls.f_pvalue
+    std_err=res_wls.bse[1]
+    return np.array([slope, intercept, r_value, p_value, std_err])
 
 def polyfit_xr(ohc_global,nd=4):
     model = xr.apply_ufunc(
