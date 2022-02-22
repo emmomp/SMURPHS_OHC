@@ -29,9 +29,9 @@ attrs={'contact':'emmomp@bas.ac.uk',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of HadGem3-GC31-LL CMIP6 PIC data, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995'}
 
-save_dir = '../data_in/' #Directory to load from and save data to
+save_dir = '../data_in/' #Directory to save data to
 
-masks=xr.open_dataset(save_dir+'subbasins_eORCA1-GO6-Daley.nc')
+masks=xr.open_dataset(save_dir+'model_other_data/subbasins_eORCA1-GO6-Daley.nc')
 # Match up grid formats
 masks=masks.isel(x=slice(1,-1),y=slice(1,-1)) 
 masks=masks.rename({'x':'i','y':'j'})

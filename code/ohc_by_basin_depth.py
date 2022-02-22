@@ -30,10 +30,10 @@ attrs={'contact':'emmomp@bas.ac.uk',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of the SMURPHS ensemble, See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806'}
 
-save_dir = '../data_in/' #Directory to load from and save data to
+save_dir = '../data_in/' #Directory to save data to
 
-masks=xr.open_dataset(save_dir+'subbasins_eORCA1-GO6-Daley.nc')
-griddata = xr.open_dataset(save_dir+'/nemo_at491o_1m_19991201-20000101_grid-T.nc')
+masks=xr.open_dataset(save_dir+'model_other_data/subbasins_eORCA1-GO6-Daley.nc')
+griddata = xr.open_dataset(save_dir+'model_other_data/nemo_at491o_1m_19991201-20000101_grid-T.nc')
 vol = (griddata.area*griddata.thkcello).squeeze()
 del vol['time_centered']
 
