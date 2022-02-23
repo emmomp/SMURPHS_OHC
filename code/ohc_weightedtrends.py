@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ohc_weightedtrends_obs.py
+ohc_weightedtrends.py
 
 Code to load global ocean heat content time series and calculate weighted linear trends, as part of analysis for Boland et al (in prep)
 
