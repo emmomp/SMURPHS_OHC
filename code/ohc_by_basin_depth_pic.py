@@ -31,7 +31,7 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 save_dir = '../data_in/' #Directory to save data to
 
-masks=xr.open_dataset(save_dir+'model_other_data/subbasins_eORCA1-GO6-Daley.nc')
+masks=xr.open_dataset(save_dir+'other_model_data/subbasins_eORCA1-GO6-Daley.nc')
 # Match up grid formats
 masks=masks.isel(x=slice(1,-1),y=slice(1,-1)) 
 masks=masks.rename({'x':'i','y':'j'})
@@ -83,13 +83,13 @@ for basin in basin_masks.keys():
     ohc.attrs['units']='J'
     ohc['basin']=basin
     ohc.attrs.update(attrs)     
-    ohc.to_netcdf(save_dir+'ohc_pic_'+basin+'.nc')
+    ohc.to_netcdf(save_dir+'pic_data/ohc_pic_'+basin+'.nc')
           
     ohc_bydepth.name='ohc'
     ohc_bydepth.attrs['long_name']=basin_longname[basin]+' heat content by depth bin'
     ohc_bydepth.attrs['units']='J'   
     ohc_bydepth['basin']=basin
     ohc_bydepth.attrs.update(attrs)     
-    ohc_bydepth.to_netcdf(save_dir+'ohc_pic_bydepth_'+basin+'.nc')
+    ohc_bydepth.to_netcdf(save_dir+'pic_data/ohc_pic_bydepth_'+basin+'.nc')
 
 print('All Done')

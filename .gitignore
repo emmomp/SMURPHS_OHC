@@ -1,6 +1,6 @@
 data_in/
 figs/
-code/out.txt
+code/out*.txt
 
 
 # Byte-compiled / optimized / DLL files
