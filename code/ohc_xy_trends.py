@@ -26,8 +26,6 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 save_dir = '../data_in/' #Directory to save data to
 
-griddata = xr.open_dataset(save_dir+'model_other_data/nemo_at491o_1m_19991201-20000101_grid-T.nc')
-
 exps=['historical0p2','historical0p4','historical0p7','historical1p0','historical1p5']
 runs=['r1i1p1f1','r2i1p1f1','r3i1p1f1','r4i1p1f1','r5i1p1f1']
 

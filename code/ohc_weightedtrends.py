@@ -29,16 +29,10 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 exps=['historical0p2','historical0p4','historical0p7','historical1p0','historical1p5']
 
-def pre_proc(ds):
-    filename=ds.encoding['source']
-    ds['exp']=(('exp',),[filename.split(sep='_')[-3]])
-    ds['run']=(('run',),[filename.split(sep='_')[-2]])
-    return ds
-
 # Open model ohc time series
 ohc_global=[]
 for exp in exps:
-    ohc_global.append(xr.open_mfdataset(save_dir+'ohc_bydepth_'+exp+'*global*.nc',preprocess=pre_proc,concat_dim='run',combine='nested',data_vars=['ohc',]))
+    ohc_global.append(xr.open_mfdataset(save_dir+'ohc_bydepth_'+exp+'*global*.nc',concat_dim='run',combine='nested',data_vars=['ohc',]))
 ohc_global=xr.combine_nested(ohc_global,concat_dim='exp',data_vars=['ohc',]) 
 ohc_global=ohc_global.drop('deptht_bounds')
 ohc_global=ohc_global.swap_dims({'time_counter':'time_centered'})

@@ -33,7 +33,7 @@ attrs={'contact':'emmomp@bas.ac.uk',
 save_dir = '../data_in/' #Directory to save data to
 
 masks=xr.open_dataset(save_dir+'other_model_data/subbasins_eORCA1-GO6-Daley.nc')
-griddata = xr.open_dataset(save_dir+'other_model_data/nemo_at491o_1m_19991201-20000101_grid-T.nc')
+griddata = xr.open_dataset(save_dir+'other_model_data/nemo_grid-T.nc')
 vol = (griddata.area*griddata.thkcello).squeeze()
 del vol['time_centered']
 

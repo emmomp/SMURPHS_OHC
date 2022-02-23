@@ -19,8 +19,14 @@ Created on Mon Feb 21 16:30:37 2022
 import xarray as xr
 import utils
 import numpy as np
+from datetime import date
 
 basins=['global','atl','pac','so','ind']
+
+attrs={'contact':'emmomp@bas.ac.uk',
+       'references':'HadGem3-GC31-LL PIC OHC data from Boland et al (in prep)',
+       'date':'Created on '+date.today().strftime("%d/%m/%Y"),
+       'notes':'Data produced by analysis of HadGem3-GC31-LL CMIP6 PIC data, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995'}
 
 save_dir = '../data_in/' #Directory to load from and save data to
 
@@ -42,4 +48,5 @@ OHC_drift.name='OHC_drift'
 del OHC_drift['parameter']
 OHC_drift.attrs['long_name']='Drift in OHC from PIC'
 OHC_drift.attrs['units']='1e18 J/month'
+OHC_drift.attrs.update(attrs) 
 OHC_drift.to_netcdf(save_dir+'ohc_pic_all_drift.nc')
