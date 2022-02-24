@@ -32,15 +32,13 @@ exps=['historical0p2','historical0p4','historical0p7','historical1p0','historica
 # Open model ohc time series
 ohc_global=[]
 for exp in exps:
-    ohc_global.append(xr.open_mfdataset(save_dir+'ohc_bydepth_'+exp+'*global*.nc',concat_dim='run',combine='nested',data_vars=['ohc',]))
+    ohc_global.append(xr.open_mfdataset(save_dir+'ohc_tseries/ohc_bydepth_'+exp+'*global*.nc',concat_dim='run',combine='nested',data_vars=['ohc',]))
 ohc_global=xr.combine_nested(ohc_global,concat_dim='exp',data_vars=['ohc',]) 
-ohc_global=ohc_global.drop('deptht_bounds')
 ohc_global=ohc_global.swap_dims({'time_counter':'time_centered'})
-ohc_global['time_days']=('time_centered',(ohc_global.time_centered-ohc_global.time_centered[0])/np.timedelta64(1,'D'))
 ohc_global['time_mths']=('time_centered',np.arange(0,1980))
 
 # Open drift from PIC experiment
-ohc_pic_drift=xr.open_dataarray(save_dir+'ohc_pic_all_drift.nc')
+ohc_pic_drift=xr.open_dataarray(save_dir+'pic_data/ohc_pic_all_drift.nc')
 ohc_pic_drift['deptht_bins']=(('lev_bins',),[b'Full Depth',]+list(ohc_global['deptht_bins'].data))
 ohc_pic_drift=ohc_pic_drift.swap_dims({'lev_bins':'deptht_bins'})
 time_months=xr.DataArray(dims=['time_centered',],data=np.arange(0,1980))
@@ -49,8 +47,8 @@ time_months=xr.DataArray(dims=['time_centered',],data=np.arange(0,1980))
 ohc_global['ohc']=(ohc_global['ohc']-(ohc_pic_drift.sel(basin='global')*1e18*time_months))/1e22
 
 # Create two summed ranges
-ohc_0700=ohc_global.ohc.sel(deptht_bins=[b'0-300m',b'300-700m']).sum(dim='deptht_bins')
-ohc_02000=ohc_global.ohc.sel(deptht_bins=[b'0-300m',b'300-700m',b'700-2000m']).sum(dim='deptht_bins')
+ohc_0700=ohc_global.ohc.sel(deptht_bins=['0-300m','300-700m']).sum(dim='deptht_bins')
+ohc_02000=ohc_global.ohc.sel(deptht_bins=['0-300m','300-700m','700-2000m']).sum(dim='deptht_bins')
 
 # Linear fit to 1955-2015
 long_fit_0700=utils.lin_regress(ohc_global.time_mths.sel(time_centered=slice('1955-01-01',None)),ohc_0700.sel(time_centered=slice('1955-01-01',None)),[["time_centered"], ["time_centered"]])
@@ -67,7 +65,6 @@ long_fit.to_netcdf(save_dir+'ohc_trends/longfit_model.nc')
 
 # Running 30 year fits
 
-ohc_0700=ohc_global.ohc.sel(deptht_bins=[b'0-300m',b'300-700m']).sum(dim='deptht_bins')
 all_fit=[]
 for tchunk in range(0,1608):
     lin_fit=utils.lin_regress(ohc_global.time_mths[tchunk:tchunk+12*31],ohc_0700.isel(time_centered=slice(tchunk,tchunk+12*31)),[["time_centered"], ["time_centered"]])
@@ -78,7 +75,6 @@ all_fits_0700['time_years']=1850+(all_fits_0700['time_mths']+15.5*12)/12
 all_fits_0700=all_fits_0700.swap_dims({'time_mths':'time_years'})
 all_fits_0700['drange']='OHC0-700m'
 
-ohc_02000=ohc_global.ohc.sel(deptht_bins=[b'0-300m',b'300-700m',b'700-2000m']).sum(dim='deptht_bins')
 all_fit=[]
 for tchunk in range(0,1608):
     lin_fit=utils.lin_regress(ohc_global.time_mths[tchunk:tchunk+12*31],ohc_02000.isel(time_centered=slice(tchunk,tchunk+12*31)),[["time_centered"], ["time_centered"]])
