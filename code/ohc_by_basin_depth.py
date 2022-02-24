@@ -70,7 +70,7 @@ def preproc_data(ds):
 for index, row in df.iterrows():
     exp = row[0]
     run = row[1]
-    files = glob.glob(save_dir+'ohc_*'+exp+'_'+run+'*nc')
+    files = glob.glob(save_dir+'ohc_tseries/ohc_*'+exp+'_'+run+'*nc')
     # Check if output already exists
     if len(files)==10:
         print('Skipping '+exp+' '+run)
@@ -140,7 +140,7 @@ for index, row in df.iterrows():
                 ohc['exp']=exp
                 ohc['run']=run
                 ohc.attrs.update(attrs)
-                ohc.to_netcdf(save_dir+'ohc_'+exp+'_'+run+'_'+basin+'.nc')
+                ohc.to_netcdf(save_dir+'ohc_tseries/ohc_'+exp+'_'+run+'_'+basin+'.nc')
                 
                 ohc_bydepth=xr.concat(ohc_bydepth_datasets[basin],'time_counter')
                 ohc_bydepth.load()         
@@ -151,7 +151,7 @@ for index, row in df.iterrows():
                 ohc_bydepth['exp']=exp
                 ohc_bydepth['run']=run      
                 ohc_bydepth.attrs.update(attrs)       
-                ohc_bydepth.to_netcdf(save_dir+'ohc_bydepth_'+exp+'_'+run+'_'+basin+'.nc')                
+                ohc_bydepth.to_netcdf(save_dir+'ohc_tseries/ohc_bydepth_'+exp+'_'+run+'_'+basin+'.nc')                
             
             print('Done '+exp+' '+run)
         else: 

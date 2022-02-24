@@ -32,8 +32,8 @@ save_dir = '../data_in/' #Directory to load from and save data to
 
 pic_all=[]
 for basin in basins:
-    pic=xr.open_dataset('{}ohc_pic_bydepth_{}.nc'.format(save_dir,basin))
-    pic_fd=xr.open_dataset('{}ohc_pic_{}.nc'.format(save_dir,basin))
+    pic=xr.open_dataset('{}pic_data/ohc_pic_bydepth_{}.nc'.format(save_dir,basin))
+    pic_fd=xr.open_dataset('{}pic_data/ohc_pic_{}.nc'.format(save_dir,basin))
     pic_fd=pic_fd.assign_coords({'lev_bins':'Full Depth'})
     pic=xr.concat([pic_fd,pic],'lev_bins')
     pic['basin']=basin
@@ -49,4 +49,4 @@ del OHC_drift['parameter']
 OHC_drift.attrs['long_name']='Drift in OHC from PIC'
 OHC_drift.attrs['units']='1e18 J/month'
 OHC_drift.attrs.update(attrs) 
-OHC_drift.to_netcdf(save_dir+'ohc_pic_all_drift.nc')
+OHC_drift.to_netcdf(save_dir+'pic_data/ohc_pic_all_drift.nc')
