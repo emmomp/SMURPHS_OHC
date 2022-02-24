@@ -92,6 +92,7 @@ long_fit_iap=xr.concat(long_fit_iap,'drange')
 long_fit_iap.attrs.update(attrs_iap)  
 long_fit_iap.attrs['description']='Linear fit statistics for 1955-2015 for IAP 0-700m and 0-2000m OHC time series'
 long_fit_iap.attrs['slope_units']='x10^22 J/mth'
+long_fit_iap.name='stats'
 long_fit_iap.to_netcdf(save_dir+'ohc_trends/longfit_obs_iap.nc')
 
 # 30 year running trends
@@ -111,6 +112,7 @@ all_fit_iap=xr.combine_nested(all_fit_iap,concat_dim=['time_yrs','drange'])
 all_fit_iap.attrs.update(attrs_iap)  
 all_fit_iap.attrs['description']='Linear fit statistics for running 30 year sections of IAP OHC time series'
 all_fit_iap.attrs['slope_units']='x10^22 J/mth'
+all_fit_iap.name='stats'
 all_fit_iap.to_netcdf(save_dir+'ohc_trends/allfit_obs_iap.nc')
 
 # NOAA
@@ -132,6 +134,7 @@ long_fit_noaa=xr.concat([long_fit_noaa_700,long_fit_noaa_2000],'drange')
 long_fit_noaa.attrs.update(attrs_noaa)  
 long_fit_noaa.attrs['description']='Linear fit statistics for WOA OHC time-series: 1955-2020 for 0-700m, 1957-2016 for 0-2000m'
 long_fit_noaa.attrs['slope_units']='x10^22 J/mth'
+long_fit_noaa.name='stats'
 long_fit_noaa.to_netcdf(save_dir+'ohc_trends/longfit_obs_noaa.nc')
 
 all_fit_noaa=[]
@@ -162,6 +165,7 @@ all_fit_noaa=xr.concat([all_fit_noaa_700,all_fit_noaa_2000],'drange')
 all_fit_noaa.attrs.update(attrs_noaa)  
 all_fit_noaa.attrs['description']='Linear fit statistics for running 30 year sections of WOA 2018 OHC time-series'
 all_fit_noaa.attrs['slope_units']='x10^22 J/mth'
+all_fit_noaa.name='stats'
 all_fit_noaa.to_netcdf(save_dir+'ohc_trends/allfit_obs_noaa.nc')
 
 print('all done')

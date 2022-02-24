@@ -60,6 +60,7 @@ long_fit_02000['drange']='OHC0-2000m'
 long_fit=xr.concat([long_fit_0700,long_fit_02000],'drange')
 
 long_fit.attrs.update(attrs)  
+long_fit.name='stats'
 long_fit.attrs['description']='Linear fit statistics for 1955-2015 SMURPHS 0-700m and 0-2000m OHC time series'
 long_fit.attrs['slope_units']='x10^22 J/mth'
 long_fit.to_netcdf(save_dir+'ohc_trends/longfit_model.nc')
@@ -91,6 +92,7 @@ all_fits_02000['drange']='OHC0-2000m'
 all_fits=xr.concat([all_fits_0700,all_fits_02000],'drange')
 
 all_fits.attrs.update(attrs)  
+all_fits.name='stats'
 all_fits.attrs['description']='Linear fit statistics for running 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
 all_fits.attrs['slope_units']='x10^22 J/mth'
 all_fits.to_netcdf(save_dir+'ohc_trends/allfit_model.nc')
