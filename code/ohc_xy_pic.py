@@ -42,6 +42,7 @@ ohc_xy=data_weighted.sum(dim='lev')*rho_0*c_p
 ohc_xy.name='ohc'
 ohc_xy.attrs['long_name']='Ocean Heat Content, full depth integrated'
 ohc_xy.attrs['units']='J/m^2'     
+ohc_xy.attrs.update(attrs)
    
 print('writing to file')
 ohc_xy.to_netcdf(save_dir+'pic_data/ohc_xy_pic.nc')
