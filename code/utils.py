@@ -11,6 +11,7 @@ import xarray as xr
 from scipy import stats
 import statsmodels.api as sm
 import os
+import pyresample
 
 ##Create 4th order Bworth filter
 def butter_lowpass(data,cut,order=4,sample_freq=1) :
@@ -172,3 +173,24 @@ def get_date_range_files(filename_structure,netcdfs,start_date,end_date):
                 netcdfs = np.array(netcdfs)[keep_ind]
     
     return netcdfs 
+
+def setup_regrid(nav_lon,nav_lat,new_lon=np.linspace(-179,180,360),new_lat=np.linspace(-89.5,89.5,180)):
+    orig_grid = pyresample.geometry.SwathDefinition(lons=nav_lon.data, lats=nav_lat.data)
+    yi,xi=np.meshgrid(new_lat,new_lon)
+    new_grid  = pyresample.geometry.GridDefinition(lons=xi,lats=yi)
+    resample_data = pyresample.kd_tree.get_neighbour_info(orig_grid, new_grid, 100000, neighbours=1)
+    return resample_data   
+
+def repeat_regrid(ds,islogical,resample_data,new_lon=np.linspace(-179,180,360), new_lat=np.linspace(-89.5,89.5,180),loop_dim='exp'):    
+    grid_shape=[new_lon.size,new_lat.size]
+    if islogical:
+        foo = pyresample.kd_tree.get_sample_from_neighbour_info('nn', grid_shape, ds.transpose(...,loop_dim).astype(int).values,
+                                              resample_data[0], resample_data[1],resample_data[2])    
+        
+        foo=np.ma.masked_equal(foo, 0)
+        foo[foo>0]=1
+    else:  
+        foo = pyresample.kd_tree.get_sample_from_neighbour_info('nn', grid_shape, ds.transpose(...,loop_dim).values,
+                                              resample_data[0], resample_data[1],resample_data[2])    
+    ds2=xr.DataArray(foo,dims=['lon','lat',loop_dim],coords={'lon':(('lon'),new_lon),'lat':(('lat'),new_lat),loop_dim:(loop_dim,ds[loop_dim].data)})
+    return ds2
