@@ -15,10 +15,9 @@ Created on Wed Dec  2 12:19:10 2020
 
 @author: emmomp
 """
-
+import utils
 import baspy as bp
 import xarray as xr
-import date_range
 from datetime import date
 
 rho_0 = 1.027e3 
@@ -58,7 +57,7 @@ for index, row in df.iterrows():
     print('Opening row '+exp+' '+run)
     files = bp.get_files(row)
     # Pull out 1955 onwards
-    sfiles = date_range.get_date_range_files(fname_struct,files,startdate,enddate)
+    sfiles = utils.get_date_range_files(fname_struct,files,startdate,enddate)
     print('Found ',len(sfiles),' files ')
 
     with xr.open_mfdataset(sfiles,preprocess=preproc_data,concat_dim='time_centered',combine='nested',data_vars='minimal', coords='minimal', compat='override') as data:
@@ -80,13 +79,13 @@ for index, row in df.iterrows():
         ohc_xy_bybins=xr.concat(ohc_xy_bybins,'depth_range')  
         ohc_xy_bybins['exp']=exp
         ohc_xy_bybins['run']=run
-        ohc_xy_bybinsname='ohc'
+        ohc_xy_bybins.name='ohc'
         ohc_xy_bybins.attrs['long_name']='Heat content, depth integrated'
         ohc_xy_bybins.attrs['units']='J/m^2'   
         ohc_xy_bybins.attrs.update(attrs)     
    
-        ohc_xy.ohc.to_netcdf(save_dir+'ohc_xy_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
-        ohc_xy_bybins.ohc.to_netcdf(save_dir+'ohc_xy_bydepth_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
+        ohc_xy.to_netcdf(save_dir+'ohc_xy_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
+        ohc_xy_bybins.to_netcdf(save_dir+'ohc_xy_bydepth_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
 
 print('All done')
     
