@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+utils.py
+
+Functions required for the analysis of SMURPHS OHC data, produced for Boland et al (in prep).
+
+For more details on the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806).
+
+See https://github.com/emmomp/SMURPHS_OHC for details
+
 Created on Mon Jan 20 15:59:43 2020
 
-@author: emmomp
+@author: emmomp@bas.ac.uk Emma J D Boland
 """
 from scipy import signal
 import numpy as np
