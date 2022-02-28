@@ -55,12 +55,12 @@ data_weighted=data_slice*dx.squeeze(drop=True)
 ohc_yz=data_weighted.sum(dim='x')*rho_0*c_p
 ohc_yz['nav_lat']=data_weighted['nav_lat'].mean(dim='x')
 ohc_yz.name='ohc'
-ohc_yz.attrs['long_name']='Ocean Heat Content, full depth integrated'
+ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
 ohc_yz.attrs.update(attrs)    
 ohc_yz.attrs['units']='J/m^2'       
    
 print('writing global to file')
-ohc_yz.to_netcdf(save_dir+'ohc_yz_global_pic.nc')
+ohc_yz.to_netcdf(save_dir+'pic_data/ohc_yz_global_pic.nc')
 
 for basin in basin_masks.keys():
     print(basin)
@@ -68,9 +68,9 @@ for basin in basin_masks.keys():
     ohc_yz=data_masked.sum(dim='x')*rho_0*c_p
     ohc_yz['nav_lat']=data_weighted['nav_lat'].mean(dim='x')
     ohc_yz.name='ohc'
-    ohc_yz.attrs['long_name']='Ocean Heat Content, full depth integrated'
+    ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
     ohc_yz.attrs['units']='J/m^2'    
     ohc_yz.attrs.update(attrs)     
-    ohc_yz.to_netcdf(save_dir+'ohc_yz_'+basin+'_pic.nc')
+    ohc_yz.to_netcdf(save_dir+'pic_data/ohc_yz_'+basin+'_pic.nc')
 
 print('all done')

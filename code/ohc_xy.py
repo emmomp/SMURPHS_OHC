@@ -84,8 +84,8 @@ for index, row in df.iterrows():
         ohc_xy_bybins.attrs['units']='J/m^2'   
         ohc_xy_bybins.attrs.update(attrs)     
    
-        ohc_xy.to_netcdf(save_dir+'ohc_xy_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
-        ohc_xy_bybins.to_netcdf(save_dir+'ohc_xy_bydepth_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
+        ohc_xy.to_netcdf(save_dir+'ohc_xy/ohc_xy_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
+        ohc_xy_bybins.to_netcdf(save_dir+'ohc_xy/ohc_xy_bydepth_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
 
 print('All done')
     

@@ -28,7 +28,7 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 save_dir = '../data_in/' #Directory to load from and save data to
 
-ohc_xy=xr.open_dataarray(save_dir+'ohc_xy_pic.nc')
+ohc_xy=xr.open_dataarray(save_dir+'pic_data/ohc_xy_pic.nc')
 nt=ohc_xy['time'].size
 ohc_xy['time_mths']=('time',np.arange(0,nt))
 drift=utils.lin_regress(ohc_xy.time_mths[0:6000],ohc_xy[0:6000,:,:],[['time',],['time',]])
@@ -39,4 +39,4 @@ del OHC_drift['parameter']
 OHC_drift.attrs['long_name']='Drift in depth integrated OHC from PIC'
 OHC_drift.attrs['units']='J/m^2/month'
 OHC_drift.attrs.update(attrs)
-OHC_drift.to_netcdf('./ohc_xy_pic_drift.nc')
+OHC_drift.to_netcdf(save_dir+'pic_data/ohc_xy_pic_drift.nc')

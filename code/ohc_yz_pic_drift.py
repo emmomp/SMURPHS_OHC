@@ -29,7 +29,7 @@ basins=['global','so','atl','ind','pac']
 print('loading yz pic data')
 ohc_yz=[]
 for basin in basins:
-    ohc_yz_basin=xr.open_dataarray(save_dir+'ohc_yz_{}_pic.nc'.format(basin))
+    ohc_yz_basin=xr.open_dataarray(save_dir+'pic_data/ohc_yz_{}_pic.nc'.format(basin))
     ohc_yz_basin['basin']=basin
     ohc_yz.append(ohc_yz_basin.isel(time=slice(0,6000)))
 ohc_yz=xr.concat(ohc_yz,'basin')
@@ -40,8 +40,8 @@ print('drifts calculated, writing to file')
 OHC_drift=drift.sel(parameter='slope')
 OHC_drift.name='OHC_yz_drift'
 del OHC_drift['parameter']
-OHC_drift.attrs['long_name']='Drift in depth integrated OHC from PIC'
+OHC_drift.attrs['long_name']='Drift in zonally integrated OHC from PIC'
 OHC_drift.attrs['units']='J/m^2/month'
 OHC_drift.attrs.update(attrs)
-OHC_drift.to_netcdf(save_dir+'ohc_yz_pic_drift.nc')
+OHC_drift.to_netcdf(save_dir+'pic_data/ohc_yz_pic_drift.nc')
 print('done')

@@ -15,7 +15,7 @@ Created on Mon Nov  8 16:33:35 2021
 """
 import baspy as bp
 import xarray as xr
-import date_range
+import utils
 from datetime import date
 
 rho_0 = 1.027e3 
@@ -63,7 +63,7 @@ for index, row in df.iterrows():
     run = row[1]
     print('Opening row '+exp+' '+run)
     files = bp.get_files(row)    
-    sfiles = date_range.get_date_range_files(fname_struct,files,startdate,enddate)
+    sfiles = utils.get_date_range_files(fname_struct,files,startdate,enddate)
     print('Found ',len(sfiles),' files ')
 
     with xr.open_mfdataset(sfiles,preprocess=preproc_data,concat_dim='time_centered',combine='nested',data_vars='minimal', coords='minimal', compat='override') as data:
@@ -77,7 +77,7 @@ for index, row in df.iterrows():
         ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
         ohc_yz.attrs['units']='J/m^2'   
         ohc_yz.attrs.update(attrs)               
-        ohc_yz.ohc.to_netcdf(save_dir+'ohc_yz_global_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
+        ohc_yz.to_netcdf(save_dir+'ohc_yz/ohc_yz_global_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
     
         for basin in basin_masks.keys():
                 print(basin)
@@ -90,6 +90,6 @@ for index, row in df.iterrows():
                 ohc_yz.attrs.update(attrs)    
                 ohc_yz.attrs['long_name']='Zonally Integrated Heat content'
                 ohc_yz.attrs['units']='J/m^2'                     
-                ohc_yz.ohc.to_netcdf(save_dir+'ohc_yz_'+basin+'_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
+                ohc_yz.to_netcdf(save_dir+'ohc_yz/ohc_yz_'+basin+'_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
                     
 print('all done')

@@ -42,7 +42,7 @@ y_mid=[1975.5,1995.5]
     
 foo=[]
 for exp in exps:
-    ds=xr.open_mfdataset(save_dir+'ohc_xy_'+exp+'_*_'+str(startdate)+'_'+str(enddate)+'.nc',combine='nested',concat_dim='run')
+    ds=xr.open_mfdataset(save_dir+'ohc_xy/ohc_xy_'+exp+'_*_'+str(startdate)+'_'+str(enddate)+'.nc',combine='nested',concat_dim='run')
     foo.append(ds)
 ohc_xy=xr.concat(foo,'exp') 
 ohc_xy['time_mths']=('time_centered',np.arange(0,721))
@@ -68,7 +68,7 @@ run_fit=xr.concat(run_fit,'time')
 all_fit=xr.concat(all_fit,'time')
 
 # Load drift
-drift=xr.open_dataarray(save_dir+'ohc_xy_pic_drift.nc')
+drift=xr.open_dataarray(save_dir+'pic_data/ohc_xy_pic_drift.nc')
 drift=drift.rename({'j':'y','i':'x','latitude':'nav_lat','longitude':'nav_lon'})
 
 # Remove drift
@@ -84,20 +84,24 @@ for tchunk in range(0,2):
     print('Trends '+str(y_start[tchunk])+' '+str(y_end[tchunk]))
     all_fit_regrid=utils.repeat_regrid(all_fit.isel(parameter=0,time=tchunk),False,resample_data)
     all_fit_regrid['time']=all_fit['time'][tchunk]
-    all_fit_regrid.attrs.update(attrs)  
+    all_fit_regrid.attrs.update(attrs)
+    all_fit_regrid.name='stats'  
     all_fit_regrid.attrs['description']='Linear fit statistics for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
     all_fit_regrid.attrs['slope_units']='x10^22 J/mth'
-    all_fit_regrid.to_netcdf(save_dir+'ohc_xy_trend_regrid_runmean_'+str(y_start[tchunk])+str(y_end[tchunk])+'.nc')
+    all_fit_regrid.to_netcdf(save_dir+'ohc_xy/ohc_xy_trend_regrid_runmean_'+str(y_start[tchunk])+str(y_end[tchunk])+'.nc')
     
-    dplot_runs=[]
+    run_fit_regrid=[]
     for run in runs:
         dplot=utils.repeat_regrid(run_fit.sel(run=run).isel(parameter=0,time=tchunk),False,resample_data)
         dplot=dplot.assign_coords(run=run)
         dplot['time']=run_fit['time'][tchunk]
-        dplot_runs.append(dplot)            
-    dplot_runs=xr.concat(dplot_runs,'run')
-    dplot_runs.to_netcdf(save_dir+'ohc_xy_trend_regrid_byrun_'+str(y_start[tchunk])+str(y_end[tchunk])+'.nc')
+        run_fit_regrid.append(dplot)            
+    run_fit_regrid=xr.concat(run_fit_regrid,'run')
+    run_fit_regrid.attrs.update(attrs)
+    run_fit_regrid.name='stats'
+    run_fit_regrid.attrs['description']='Linear fit statistics for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
+    run_fit_regrid.attrs['slope_units']='x10^22 J/mth'
+    run_fit_regrid.to_netcdf(save_dir+'ohc_xy/ohc_xy_trend_regrid_byrun_'+str(y_start[tchunk])+str(y_end[tchunk])+'.nc')
                       
-
-            
+print('all done')
 
