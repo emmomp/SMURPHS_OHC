@@ -44,12 +44,12 @@ for ie,exp in enumerate(alt_exps):
         i45=np.abs(strf.nav_lat-45).argmin(dim='y')
         strf_45N=strf.zomsfatl.squeeze().isel(y=i45.load())
         amoc=strf_45N.max(dim='depthw')
-        amoc.attrs.units='Sv'
-        amoc.attrs.long_name='AMOC strength at 45N'
+        amoc.attrs['units']='Sv'
+        amoc.attrs['long_name']='AMOC strength at 45N'
         amoc.attrs.description='AMOC strength at 45N, determined from depth maximum of zomsfatl, zonally averaged meridional overturning streamfn in the Atlantic'
         amoc_depth=strf_45N.idxmax(dim='depthw')
-        amoc_depth.attrs.units='m'
-        amoc_depth.attrs.long_name='Depth of AMOC max at 45N'        
+        amoc_depth.attrs['units']='m'
+        amoc_depth.attrs['long_name']='Depth of AMOC max at 45N'        
         amoc_all=xr.Dataset(data_vars={'AMOC_strength':amoc,'AMOC_depth':amoc_depth})
         amoc_all.attrs.update(attrs)                
 
