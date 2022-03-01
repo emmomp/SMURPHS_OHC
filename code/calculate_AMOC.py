@@ -57,7 +57,7 @@ for ie,exp in enumerate(alt_exps):
         amoc_all['run']=(('run',),[run])             
 
         print('writing amoc to file')
-        amoc_all.to_netcdf(save_dir+'other_model_data/amoc_45N_{}_{}.nc'.format(new_exp,run))
+        amoc_all.to_netcdf(save_dir+'amoc_tseries/amoc_45N_{}_{}.nc'.format(new_exp,run))
 
 print('finished')
 
