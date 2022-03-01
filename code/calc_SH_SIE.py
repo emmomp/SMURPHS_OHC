@@ -46,5 +46,5 @@ siarea=siarea.sum(dim=['latitude','longitude'])
 siarea.attrs={'long_name':'Sea Ice Area (Southern Hemisphere)','units':'km^2'}
 siarea.name='siarea_sh'
 siarea.attrs.update(attrs)
-siarea.to_netcdf(save_dir+'other_model_data/SIA_SH.nc')
+siarea.to_netcdf(save_dir+'other_model_data/SIE_SH.nc')
 print('All done')
