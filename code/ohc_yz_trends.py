@@ -59,7 +59,7 @@ foo=[]
 for ie,exp in enumerate(exps):
     foo.append([])
     for basin in basins:
-        ds=xr.open_mfdataset(save_dir+'ohc_yz_'+basin+'_'+exp+'_*_'+str(startdate)+'_'+str(enddate)+'.nc',combine='nested',concat_dim='run')
+        ds=xr.open_mfdataset(save_dir+'ohc_yz/ohc_yz_'+basin+'_'+exp+'_*_'+str(startdate)+'_'+str(enddate)+'.nc',combine='nested',concat_dim='run')
         ds['basin']=(('basin'),[basin,])
         foo[ie].append(ds)
 ohc_yz=xr.combine_nested(foo,concat_dim=['exp','basin']) 
