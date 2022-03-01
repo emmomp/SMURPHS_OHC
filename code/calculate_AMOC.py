@@ -39,8 +39,6 @@ for ie,exp in enumerate(alt_exps):
                       preprocess=pre_proc,combine='by_coords')
         
         new_exp=exp_map[exp]
-        strf['exp']=(('exp',),[new_exp])
-        strf['run']=(('run',),[run])
         
         print('loaded and combined')
         # Find 45N
@@ -54,7 +52,9 @@ for ie,exp in enumerate(alt_exps):
         amoc_depth.attrs['units']='m'
         amoc_depth.attrs['long_name']='Depth of AMOC max at 45N'        
         amoc_all=xr.Dataset(data_vars={'AMOC_strength':amoc,'AMOC_depth':amoc_depth})
-        amoc_all.attrs.update(attrs)                
+        amoc_all.attrs.update(attrs)   
+        amoc_all['exp']=(('exp',),[new_exp])
+        amoc_all['run']=(('run',),[run])             
 
         print('writing amoc to file')
         amoc_all.to_netcdf(save_dir+'other_model_data/amoc_45N_{}_{}.nc'.format(new_exp,run))
