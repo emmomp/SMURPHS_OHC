@@ -25,7 +25,7 @@ To reproduce the figures, the notebooks will look for the following directories/
 - Figure S7: amoc_tseries
 - Figure S8: SIE_SH.nc
 
-The data files themselves were created using the python scripts in [code][code/] as follows:
+The data files themselves were created using the python scripts in [code](code/) as follows:
 - ohc_tseries: ohc_by_basin_depth.py
 - pic_data: ohc_by_basin_depth_pic.py, ohc_pic_drift.py, ohc_xy_pic_drift.py, ohc_yz_pic_drift.py, ohc_xy_pic.py, ohc_yz_pic.py
 - ohc_trends: ohc_weightedtrends_obs.py, ohc_weightedtrends.py
