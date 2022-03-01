@@ -10,6 +10,8 @@ Each notebook loads data from ../data_in/. To work, data_in should contain the f
 
 Feel free to use or reproduce the code and figures but please attribute as outlined in the license.
 
+For more details on the SMURPHS ensemble, see Dittus et al. 2020 (https://doi.org/10.1029/2019GL085806)
+
 E Boland Feb 2022 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
 
 ## Further Details
