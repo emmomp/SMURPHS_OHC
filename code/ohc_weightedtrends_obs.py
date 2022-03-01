@@ -153,7 +153,7 @@ all_fit_noaa=[]
 for tchunk in range(0,obs_noaa_2000.time.shape[0]-30):
     xx=obs_noaa_2000['time'][tchunk:tchunk+30]
     yy=obs_noaa_2000['pent_h22_WO'][tchunk:tchunk+30]
-    yy_err=obs_noaa_2000['pent_h22_WO'][tchunk:tchunk+30]
+    yy_err=obs_noaa_2000['pent_h22_se_WO'][tchunk:tchunk+30]
     lstats=utils.new_weighted_linregress(xx,yy,yy_err)
     lin_fit=xr.DataArray(data=lstats,dims=('parameter',),coords={'parameter':["slope","intercept","r_value","p_value","std_err"]})
     lin_fit=lin_fit.assign_coords(time_yrs=1955+obs_noaa_2000['time'][tchunk+15]/12)
