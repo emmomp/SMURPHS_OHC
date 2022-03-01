@@ -95,6 +95,14 @@ run_slope= run_fit.isel(y=slice(1,ny-1),parameter=0)-drift
 all_slope=all_fit.isel(y=slice(1,ny-1),parameter=0)-drift
 
 print('regressions finished, writing to file')
+all_slope.attrs.update(attrs)
+all_slope.name='stats'
+all_slope.attrs['description']='Linear fit statistics for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
+all_slope.attrs['slope_units']='x10^22 J/mth'
+run_slope.attrs.update(attrs)
+run_slope.name='stats'
+run_slope.attrs['description']='Linear fit statistics for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
+run_slope.attrs['slope_units']='x10^22 J/mth'
 
 all_slope.to_netcdf(save_dir+'ohc_yz/ohc_yz_trend_runmean.nc')
 run_slope.to_netcdf(save_dir+'ohc_yz/ohc_yz_trend_byrun.nc')    
