@@ -83,8 +83,8 @@ for tchunk in range(0,2):
     lin_fit=lin_fit.assign_coords(time=trend_middates[tchunk])
     all_fit.append(lin_fit)
     
-run_fit=xr.concat(run_fit,concat_dim='time')
-all_fit=xr.concat(all_fit,concat_dim='time')
+run_fit=xr.concat(run_fit,'time')
+all_fit=xr.concat(all_fit,'time')
 
 # Load drift
 drift=xr.open_dataarray(save_dir+'pic_data/ohc_yz_pic_drift.nc')
