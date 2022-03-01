@@ -11,7 +11,7 @@ See https://github.com/emmomp/SMURPHS_OHC for details
 
 Created in Jan 2021
 
-@author: 
+@author: emmomp@bas.ac.uk Emma J D Boland
 """
 import xarray as xr
 from datetime import date

@@ -14,7 +14,7 @@ See https://github.com/emmomp/SMURPHS_OHC for details
 
 Created on Mon Feb 21 16:30:37 2022
 
-@author: emmomp@bas.ac.uk
+@author: emmomp@bas.ac.uk Emma J D Boland
 """
 import xarray as xr
 import utils

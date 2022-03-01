@@ -17,7 +17,7 @@ See https://github.com/emmomp/SMURPHS_OHC for details
 
 Created on Tue Feb 22 10:51:20 2022
 
-@author: emmomp
+@author: emmomp@bas.ac.uk Emma J D Boland
 """
 import xarray as xr
 import numpy as np

@@ -14,7 +14,7 @@ See https://github.com/emmomp/SMURPHS_OHC for details
 
 Created on 17 Mar 2020
 
-@author: emmomp@bas.ac.uk
+@author: emmomp@bas.ac.uk Emma J D Boland
 """
 
 import baspy as bp

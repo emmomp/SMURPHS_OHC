@@ -14,7 +14,7 @@ See https://github.com/emmomp/SMURPHS_OHC for details
 
 Created on Wed Nov 24 12:27:40 2021
 
-@author: emmomp
+@author: emmomp@bas.ac.uk Emma J D Boland
 """
 from datetime import date
 import baspy as bp

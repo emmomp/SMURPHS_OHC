@@ -12,7 +12,7 @@ For the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/20
 
 Created on Wed Nov 24 12:23:15 2021
 
-@author: emmomp
+@author: emmomp@bas.ac.uk Emma J D Boland
 """
 import xarray as xr
 import numpy as np

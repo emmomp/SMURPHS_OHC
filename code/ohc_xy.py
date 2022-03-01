@@ -6,14 +6,14 @@ ohc_xy.py
 Code to load ocean temperature data from the SMURPHS ensemble model output and 
 calculate time series of depth-integrated Ocean Heat Content from 1955-2014. 
 
-For the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) 
+For the SMURPHS ensemble, see Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) 
 and for the CMIP6 historical ensemble, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995.
 
 See https://github.com/emmomp/SMURPHS_OHC for details
 
 Created on Wed Dec  2 12:19:10 2020
 
-@author: emmomp
+@author: emmomp@bas.ac.uk Emma J D Boland
 """
 import utils
 import baspy as bp
