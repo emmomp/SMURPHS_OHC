@@ -38,7 +38,7 @@ print('Loading SI conc')
 si=[[],[],[],[],[]]
 for ie,exp in enumerate(alt_exps):    
     for run in runs:
-        ds=xr.open_dataset(si_dir+'siconca_Amon_HadGEM3-GC3.1_{}_{}_gn_185001-201412.nc'.format(exp,run))
+        ds=xr.open_dataset(si_dir+'siconca_SImon_HadGEM3-GC3-1_{}_{}_gn_185001-201412.nc'.format(exp,run))
         si[ie].append(ds.siconca)
 si_all=xr.combine_nested(si,concat_dim=['exp','run'],coords='minimal')
 si_all['run']=(('run'),runs)
