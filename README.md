@@ -10,13 +10,20 @@ E Boland Feb 2022 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
 
 ## Requirements
 
-[Requirements here]
+To reproduce the data from model output:
+- cftime==1.0.3.4
+- numpy==1.15.4
+- pandas==0.23.4
+- pyresample==1.16.0
+- scipy==1.1.0
+- statsmodels==0.9.0
+- xarray==0.11.0
 
 ## Steps to reproduce the paper's figures and tables
 
 To reproduce the paper's figures and tables, follow these steps:
-- Download the data required for the figures from the Figshare repository [https://figshare.com/articles/dataset/data_in/19281761/2] and place in a directory named 'data_in'. Which data is required for which figures is listed below. Alternatively this data can be re-generated from the original model output using the python files in the [code](code/) directory - see "Steps to reproduce the paper's analysis from model output".
-- Install necessary libraries (see requirements).
+- Download the data required for the figures from the Figshare repository https://figshare.com/articles/dataset/data_in/19281761/2 and place in a directory named 'data_in'. Which data is required for which figures is listed below. Alternatively this data can be re-generated from the original model output using the python files in the [code](code/) directory - see "Steps to reproduce the paper's analysis from model output".
+- Install necessary libraries (see requirements above or [figure_notebooks/requirements,txt](figure_notebooks/requirements.txt)).
 - Clone the [figure_notebooks](figure_notebooks/) directory into the same directory that contains 'data_in'.
 - Run the notebooks.
 
@@ -38,7 +45,7 @@ To reproduce the figures, the notebooks will look for the following directories/
 To reproduce the data files required to produce the figures, follow these steps:
 
 - Access the model output: details coming
-- Install necessary libraries (see requirements)
+- Install necessary libraries (see requirements above or [code/requirements,txt](code/requirements.txt))
 - Clone the code directory [code](code/) which containts python code to create the data for the figures. Automatically writes to ../data_in/. See below for further details for which scripts write to which sub-directories.
 - Run the python scripts.
 
