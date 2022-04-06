@@ -10,6 +10,16 @@ E Boland Feb 2022 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
 
 ## Requirements
 
+To reproduce the paper's figures and tables:
+- Cartopy==0.17.0
+- cftime==1.0.3.4
+- matplotlib==3.0.2
+- numpy==1.15.4
+- scikit_learn==1.0.2
+- scipy==1.1.0
+- utils==1.0.1
+- xarray==0.11.0
+
 To reproduce the data from model output:
 - cftime==1.0.3.4
 - numpy==1.15.4
