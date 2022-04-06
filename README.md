@@ -17,7 +17,6 @@ To reproduce the paper's figures and tables:
 - numpy==1.15.4
 - scikit_learn==1.0.2
 - scipy==1.1.0
-- utils==1.0.1
 - xarray==0.11.0
 
 To reproduce the data from model output:
