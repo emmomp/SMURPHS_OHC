@@ -3,6 +3,7 @@ figs/
 code/out*.txt
 code/*.out
 code/*.err
+figure_notebooks/reqs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
