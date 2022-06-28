@@ -56,7 +56,7 @@ surface_area.name='surface_area'
 surface_area.attrs['units']='m^2'
 surface_area.attrs['long_name']='Ocean Surface Area'
 
-scalings = xr.merge([basin_vol,surface_area],combine_attrs="no_conflicts")
+scalings = xr.merge([basin_vol,surface_area],combine_attrs="drop_conflicts")
 scalings.attrs.update(attrs)
 scalings.to_netcdf(save_dir+'other_model_data/vol_scalings.nc')
 
