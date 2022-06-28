@@ -21,7 +21,7 @@ attrs={'contact':'emmomp@bas.ac.uk',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of the SMURPHS ensemble, See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806'}
 
-data_dir = '../data_in'
+data_dir = '../data_in/'
 save_dir = '../data_in/' #Directory to save data to
 
 basins=['global','atl','pac','so','ind']
@@ -56,8 +56,8 @@ surface_area.name='surface_area'
 surface_area.attrs['units']='m^2'
 surface_area.attrs['long_name']='Ocean Surface Area'
 
-scalings = xr.merge([basin_vol,surface_area])
+scalings = xr.merge([basin_vol,surface_area],combine_attrs="no_conflicts")
 scalings.attrs.update(attrs)
-scalings.to_netcdf(save_dir+'vol_scalings.nc')
+scalings.to_netcdf(save_dir+'other_model_data/vol_scalings.nc')
 
 print('Finished')
