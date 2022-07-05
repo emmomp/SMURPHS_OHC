@@ -87,7 +87,7 @@ for tchunk in range(0,2):
     all_fit_regrid.attrs.update(attrs)
     all_fit_regrid.name='stats'  
     all_fit_regrid.attrs['description']='Linear fit statistics for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
-    all_fit_regrid.attrs['slope_units']='x10^22 J/mth'
+    all_fit_regrid.attrs['slope_units']='x10^22 J/m^2/mth'
     all_fit_regrid.to_netcdf(save_dir+'ohc_xy/ohc_xy_trend_regrid_runmean_'+str(y_start[tchunk])+str(y_end[tchunk])+'.nc')
     
     run_fit_regrid=[]
@@ -100,7 +100,7 @@ for tchunk in range(0,2):
     run_fit_regrid.attrs.update(attrs)
     run_fit_regrid.name='stats'
     run_fit_regrid.attrs['description']='Linear fit statistics for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
-    run_fit_regrid.attrs['slope_units']='x10^22 J/mth'
+    run_fit_regrid.attrs['slope_units']='x10^22 J/m^2/mth'
     run_fit_regrid.to_netcdf(save_dir+'ohc_xy/ohc_xy_trend_regrid_byrun_'+str(y_start[tchunk])+str(y_end[tchunk])+'.nc')
                       
 print('all done')
