@@ -2,7 +2,7 @@
 [![DOI](https://zenodo.org/badge/461815488.svg)](https://zenodo.org/badge/latestdoi/461815488)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-This repositary contains python code and notebooks to accompany the manuscript "Ocean Heat Content responses to changing Anthropogenic Aerosol Forcing Strength: regional and multi-decadal variability" Boland et al 2022 (in prep). The contents will allow for the reproduction of all tables and figures in the paper, as well the reproduction of the data files necessary for the figures. See below for more details.
+This repositary contains python code and notebooks to accompany the manuscript "Ocean Heat Content responses to changing Anthropogenic Aerosol Forcing Strength: regional and multi-decadal variability" Boland et al 2022 ([pre-print](https://doi.org/10.1002/essoar.10511062.1)). The contents will allow for the reproduction of all tables and figures in the paper, as well the reproduction of the data files necessary for the figures. See below for more details.
 
 Feel free to use or reproduce the code and figures but please attribute as outlined in the license.
 
