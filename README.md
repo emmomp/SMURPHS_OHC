@@ -41,15 +41,16 @@ To reproduce the paper's figures and tables, follow these steps:
 ### Further Details
 
 To reproduce the figures, the notebooks will look for the following directories/files in a directory called 'data_in':
-- Figure 1 & Table 2: ohc_tseries, pic_data
+- Figure 1 & Table 2: ohc_tseries, pic_data, other_model_data
 - Figure 2: ohc_tseries, pic_data, other_model_data
 - Figure 3: ohc_trends
 - Figures 4, S1, S2: ohc_xy
 - Figures 5, S3-S6: ohc_yz
 - Figure 6: ohc_xy
-- Figure 7: ohc_yz
-- Figure S7: amoc_tseries
-- Figure S8: SIE_SH.nc
+- Figure 7: ohc_yz, other_model_data
+- Figure S1: pic_data
+- Figure S8: amoc_tseries
+- Figure S9: SIE_SH.nc
 
 ## Steps to reproduce the paper's analysis from model output
 
