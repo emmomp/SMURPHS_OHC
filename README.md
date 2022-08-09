@@ -8,7 +8,7 @@ Feel free to use or reproduce the code and figures but please attribute as outli
 
 For more details on the SMURPHS ensemble, see Dittus et al. 2020 (https://doi.org/10.1029/2019GL085806)
 
-E Boland Feb 2022 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
+E Boland Aug 2022 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
 
 ## Requirements
 
