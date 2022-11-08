@@ -47,7 +47,7 @@ nd = len(depthbins)
 
 basin_masks={
         'global':xr.full_like(vol,True),
-        'so':(vol.nav_lat<=-35.0),
+        'so':(vol.latitude<=-35.0),
         'atl':masks.tmaskatl.astype(bool),
         'ind':masks.tmaskind.astype(bool),
         'pac':masks.tmaskpac.astype(bool)
