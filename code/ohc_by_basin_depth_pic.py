@@ -20,6 +20,7 @@ Updated Nov 2022
 
 import baspy as bp
 import xarray as xr
+import glob
 from datetime import date
 
 rho_0 = 1.027e3 
@@ -32,14 +33,14 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 save_dir = '../data_in/' #Directory to save data to
 
+data_dir = '/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/piControl/r1i1p1f1/Omon' # Holding accessible via JASMIN
+
 masks=xr.open_dataset(save_dir+'other_model_data/subbasins_eORCA1-GO6-Daley.nc')
-# Match up grid formats
+# Match up grid formats by removing NEMO halo
 masks=masks.isel(x=slice(1,-1),y=slice(1,-1)) 
 masks=masks.rename({'x':'i','y':'j'})
-
-df = bp.catalogue(dataset='cmip6',Var=['volcello'],Model='HadGEM3-GC31-LL',Experiment='piControl')
-data=bp.open_dataset(df)
-vol=data.volcello
+volcello=xr.open_dataset(data_dir+'/volcello/gn/v20190628/volcello_Omon_HadGEM3-GC31-LL_historical_r1i1p1f3_gn_185001-189912.nc')
+vol=volcello['volcello'][0]
 
 depthlabels=['0-300m','300-700m','700-2000m','2km+']
 depthbins = [0,300,700,2000,6001]
@@ -61,36 +62,37 @@ basin_longname={
         'pac':'Pacific',
         }
 
-# Generate dataframe with all temp data
-df = bp.catalogue(dataset='cmip6',Var=['thetao'],Model='HadGEM3-GC31-LL',Experiment='piControl')
-nt = len(bp.get_files(df.iloc[0]))
+files = glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_18*.nc'.format(data_dir))+ \
+     glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_19*.nc'.format(data_dir)) + \
+     glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_200*.nc'.format(data_dir))
 
-print('Opening data')
-ds = bp.open_dataset(df)
-data=ds.thetao
-print('Got data, calculating ohc')
-data_weighted = data*vol
 
-for basin in basin_masks.keys():
-    print(basin)
-    data_masked = data_weighted.where(basin_masks[basin])
-    ohc=data_masked.sum(dim=['i','j','lev'])*rho_0*c_p
-    
-    data_masked_binned = data_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
-    ohc_bydepth=data_masked_binned.sum(dim=['i','j','lev'])*rho_0*c_p     
-   
-    ohc.name='ohc'
-    ohc.attrs['long_name']=basin_longname[basin]+' depth integrated ocean heat content'
-    ohc.attrs['units']='J'
-    ohc['basin']=basin
-    ohc.attrs.update(attrs)     
-    ohc.to_netcdf(save_dir+'pic_data/ohc_pic_'+basin+'.nc')
-          
-    ohc_bydepth.name='ohc'
-    ohc_bydepth.attrs['long_name']=basin_longname[basin]+' heat content by depth bin'
-    ohc_bydepth.attrs['units']='J'   
-    ohc_bydepth['basin']=basin
-    ohc_bydepth.attrs.update(attrs)     
-    ohc_bydepth.to_netcdf(save_dir+'pic_data/ohc_pic_bydepth_'+basin+'.nc')
+with ds = xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
+    print('Got data, calculating ohc')
+    data_weighted = data['thetao']*vol
+
+    for basin in basin_masks.keys():
+        print(basin)
+        data_masked = data_weighted.where(basin_masks[basin])
+        vol_masked = vol.where(basin_masks[basin])
+        ohc=data_masked.sum(dim=['i','j','lev'])/vol_masked.sum(dim=['i','j','lev'])*rho_0*c_p
+
+        data_masked_binned = data_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
+        vol_masked_binned = vol_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
+        ohc_bydepth=data_masked_binned.sum(dim=['i','j','lev'])/vol_masked_binned.sum(dim=['i','j','lev'])*rho_0*c_p     
+
+        ohc.name='ohc'
+        ohc.attrs['long_name']=basin_longname[basin]+' depth integrated ocean heat content, volume averaged'
+        ohc.attrs['units']='J/m**3'
+        ohc['basin']=basin
+        ohc.attrs.update(attrs)     
+        ohc.to_netcdf(save_dir+'pic_data/ohc_pic_'+basin+'.nc')
+
+        ohc_bydepth.name='ohc'
+        ohc_bydepth.attrs['long_name']=basin_longname[basin]+' heat content by depth bin, volume averaged'
+        ohc_bydepth.attrs['units']='J/m**3'   
+        ohc_bydepth['basin']=basin
+        ohc_bydepth.attrs.update(attrs)     
+        ohc_bydepth.to_netcdf(save_dir+'pic_data/ohc_pic_bydepth_'+basin+'.nc')
 
 print('All Done')

@@ -32,13 +32,13 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 save_dir = '../data_in/' #Directory to save data to
 
-data_dir = '/gws/nopw/j04/smurphs/E/adittus/MASS_download/ocean/data_andrea/'
+data_dir = '/gws/nopw/j04/smurphs/E/adittus/MASS_download/ocean/data_andrea/' # Holding accessible via JASMIN
 
 masks=xr.open_dataset(save_dir+'other_model_data/subbasins_eORCA1-GO6-Daley.nc')
 # Match up grid formats by removing NEMO halo
 masks=masks.isel(x=slice(1,-1),y=slice(1,-1)) 
 masks=masks.rename({'x':'i','y':'j'})
-volcello=xr.open_dataset('/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/historical/r1i1p1f3/Omon/volcello/gn/latest/volcello_Omon_HadGEM3-GC31-LL_historical_r1i1p1f3_gn_185001-189912.nc')
+volcello=xr.open_dataset('/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/historical/r1i1p1f3/Omon/volcello/gn/v20190628/volcello_Omon_HadGEM3-GC31-LL_historical_r1i1p1f3_gn_185001-189912.nc')
 vol=volcello['volcello'][0]
 
 depthlabels=['0-300m','300-700m','700-2000m','2km+']
