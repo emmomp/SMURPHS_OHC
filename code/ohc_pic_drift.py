@@ -48,6 +48,6 @@ OHC_drift=drift.sel(parameter='slope')
 OHC_drift.name='OHC_drift'
 del OHC_drift['parameter']
 OHC_drift.attrs['long_name']='Drift in OHC from PIC'
-OHC_drift.attrs['units']='1e18 J/month'
+OHC_drift.attrs['units']='1e18 J/m**3/month'
 OHC_drift.attrs.update(attrs) 
 OHC_drift.to_netcdf(save_dir+'pic_data/ohc_pic_all_drift.nc')

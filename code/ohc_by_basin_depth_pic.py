@@ -67,7 +67,7 @@ files = glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_
      glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_200*.nc'.format(data_dir))
 
 
-with ds = xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
+with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
     print('Got data, calculating ohc')
     data_weighted = data['thetao']*vol
 
