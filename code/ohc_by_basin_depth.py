@@ -79,10 +79,12 @@ for exp in exps:
                 print(basin)
                 with dask.config.set(**{'array.slicing.split_large_chunks': True}):
                     data_masked = data_weighted.where(basin_masks[basin])
-                    ohc_datasets[basin]=data_masked.mean(dim=['i','j','lev'])*rho_0*c_p
+                    vol_masked=vol.where(basin_masks[basin])
+                    ohc_datasets[basin]=data_masked.sum(dim=['i','j','lev'])/vol_masked.sum(dim=['i','j','lev'])*rho_0*c_p
 
                     data_masked_binned = data_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
-                    ohc_bydepth_datasets[basin]=data_masked_binned.mean(dim=['i','j','lev'])*rho_0*c_p            
+                    vol_masked_binned=vol_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
+                    ohc_bydepth_datasets[basin]=data_masked_binned.sum(dim=['i','j','lev'])/vol_masked_binned.sum(dim=['i','j','lev'])*rho_0*c_p            
 
         print('Loading and writing to file')
         for basin in basin_masks.keys():
