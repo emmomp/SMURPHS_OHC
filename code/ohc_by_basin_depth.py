@@ -79,19 +79,19 @@ for exp in exps:
                 print(basin)
                 with dask.config.set(**{'array.slicing.split_large_chunks': True}):
                     data_masked = data_weighted.where(basin_masks[basin])
-                    ohc_datasets[basin]=data_masked.sum(dim=['i','j','lev'])*rho_0*c_p
+                    ohc_datasets[basin]=data_masked.mean(dim=['i','j','lev'])*rho_0*c_p
 
                     data_masked_binned = data_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
-                    ohc_bydepth_datasets[basin]=data_masked_binned.sum(dim=['i','j','lev'])*rho_0*c_p            
+                    ohc_bydepth_datasets[basin]=data_masked_binned.mean(dim=['i','j','lev'])*rho_0*c_p            
 
-        print('Combining, loading, and writing to file')
+        print('Loading and writing to file')
         for basin in basin_masks.keys():
             print(basin)
             ohc=ohc_datasets[basin]
             ohc.load()
             ohc.name='ohc'
-            ohc.attrs['long_name']=basin_longname[basin]+' depth integrated ocean heat content'
-            ohc.attrs['units']='J'
+            ohc.attrs['long_name']=basin_longname[basin]+' depth integrated ocean heat content, volume averaged'
+            ohc.attrs['units']='J/m**3'
             ohc['basin']=basin
             ohc['exp']=exp
             ohc['run']=run
@@ -101,14 +101,14 @@ for exp in exps:
             ohc_bydepth=ohc_bydepth_datasets[basin]
             ohc_bydepth.load()         
             ohc_bydepth.name='ohc'
-            ohc_bydepth.attrs['long_name']=basin_longname[basin]+' heat content by depth bin'
-            ohc_bydepth.attrs['units']='J'   
+            ohc_bydepth.attrs['long_name']=basin_longname[basin]+' heat content by depth bin, volume averaged'
+            ohc_bydepth.attrs['units']='J/m**3'   
             ohc_bydepth['basin']=basin
             ohc_bydepth['exp']=exp
             ohc_bydepth['run']=run      
             ohc_bydepth.attrs.update(attrs)       
             ohc_bydepth.to_netcdf(save_dir+'ohc_tseries/ohc_bydepth_'+exp+'_'+run+'_'+basin+'.nc')                
             
-            print('Done '+exp+' '+run)
+        print('Done '+exp+' '+run)
          
 print('All Done')
