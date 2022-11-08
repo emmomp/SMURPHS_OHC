@@ -6,12 +6,13 @@ ohc_xy.py
 Code to load ocean temperature data from the SMURPHS ensemble model output and 
 calculate time series of depth-integrated Ocean Heat Content from 1955-2014. 
 
+Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
+See https://github.com/emmomp/SMURPHS_OHC for details
+
 For the SMURPHS ensemble, see Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) 
 and for the CMIP6 historical ensemble, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995.
 
-See https://github.com/emmomp/SMURPHS_OHC for details
-
-Created on Wed Dec  2 12:19:10 2020
+Updated Nov 2022
 
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
@@ -24,7 +25,7 @@ rho_0 = 1.027e3
 c_p = 3850
 
 attrs={'contact':'emmomp@bas.ac.uk',
-       'references':'SMURPHS OHC data from Boland et al (in prep)',
+       'references':'SMURPHS OHC data from Boland et al 2022 (https://www.essoar.org/doi/10.1002/essoar.10511062.3)',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of the SMURPHS ensemble, See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806'}
 

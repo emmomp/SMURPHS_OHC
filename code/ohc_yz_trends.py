@@ -3,14 +3,16 @@
 """
 ohc_yz_trends.py
 
-Code to load zonally integrated ocean heat content time series and calculate linear trends, as part of analysis for Boland et al (in prep)
-
+Code to load zonally integrated ocean heat content time series and calculate linear trends.
 Global ocean heat content data from the SMURPHS ensemble, produced using ohc_yz.py
 De-drifted by PIC data, produced using ohc_yz_pic_drift.py
 
+Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
+See https://github.com/emmomp/SMURPHS_OHC for details
+
 For the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) and for the CMIP6 historical ensemble, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995.
 
-Created on Wed Dec  9 16:01:17 2020
+Updated Nov 2022
 
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
@@ -20,7 +22,7 @@ import numpy as np
 from datetime import date
 
 attrs={'contact':'emmomp@bas.ac.uk',
-       'references':'SMURPHS OHC data from Boland et al (in prep)',
+       'references':'SMURPHS OHC data from Boland et al 2022 (https://www.essoar.org/doi/10.1002/essoar.10511062.3)',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of the SMURPHS ensemble, See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806'}
 

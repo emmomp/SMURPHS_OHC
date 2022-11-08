@@ -3,15 +3,15 @@
 """
 ohc_weightedtrends.py
 
-Code to load global ocean heat content time series and calculate weighted linear trends, as part of analysis for Boland et al (in prep)
-
+Code to load global ocean heat content time series and calculate weighted linear trends.
 Global ocean heat content data from the SMURPHS ensemble, produce using ohc_by_basin_depth.py
+
+Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
+See https://github.com/emmomp/SMURPHS_OHC for details
 
 For the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) and for the CMIP6 historical ensemble, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995.
 
-See https://github.com/emmomp/SMURPHS_OHC for details
-
-Created on Tue Feb 22 11:47:31 2022
+Updated Nov 2022
 
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
@@ -23,7 +23,7 @@ from datetime import date
 save_dir = '../data_in/' #Directory to load from and save data to
 
 attrs={'contact':'emmomp@bas.ac.uk',
-       'references':'Analysed OHC data from Boland et al (in prep)',
+       'references':'Analysed OHC data from Boland et al 2022 (https://www.essoar.org/doi/10.1002/essoar.10511062.3)',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of the SMURPHS ensemble, See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806'}
 

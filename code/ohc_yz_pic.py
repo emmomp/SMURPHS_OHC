@@ -5,9 +5,10 @@ ohc_yz_pic.py
 
 Code to load ocean temperature data from the PIC of HadEM3-GC31-LL calculate time series of zonally-integrated Ocean Heat Content for de-drifting SMURPHS ensemble. 
 
-For the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) and for the CMIP6 historical ensemble, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995.
-
+Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
 See https://github.com/emmomp/SMURPHS_OHC for details
+
+For the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) and for the CMIP6 historical ensemble, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995.
 
 Created on Mon Nov 29 15:52:09 2021
 
@@ -21,7 +22,7 @@ rho_0 = 1.027e3
 c_p = 3850
 
 attrs={'contact':'emmomp@bas.ac.uk',
-       'references':'HadGem3-GC31-LL PIC OHC data from Boland et al (in prep)',
+       'references':'HadGem3-GC31-LL PIC OHC data from Boland et al 2022 (https://www.essoar.org/doi/10.1002/essoar.10511062.3)',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of HadGem3-GC31-LL CMIP6 PIC data, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995'}
 
