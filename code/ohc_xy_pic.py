@@ -18,7 +18,7 @@ Updated Nov 2022
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
 from datetime import date
-import baspy as bp
+import xarray as xr
 
 rho_0 = 1.027e3 
 c_p = 3850
@@ -29,23 +29,26 @@ attrs={'contact':'emmomp@bas.ac.uk',
        'notes':'Data produced by analysis of HadGem3-GC31-LL CMIP6 PIC data, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995'}
 
 save_dir = '../data_in/' #Directory to save data to
+data_dir = '/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/piControl/r1i1p1f1/Omon' # Holding accessible via JASMIN
 
-df = bp.catalogue(dataset='cmip6',Var=['thkcello'],Model='HadGEM3-GC31-LL',Experiment='piControl')
-data=bp.open_dataset(df)
-dz=data.thkcello
+thkcello=xr.open_dataset('{}/thkcello/gn/v20190628/thkcello_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_185001-189912.nc'.format(data_dir))
+dz=thkcello['thkcello'][0]
 
-df = bp.catalogue(dataset='cmip6',Var=['thetao'],Model='HadGEM3-GC31-LL',Experiment='piControl')
-data= bp.open_dataset(df)
+files = glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_18*.nc'.format(data_dir))+ \
+     glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_19*.nc'.format(data_dir)) + \
+     glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_200*.nc'.format(data_dir))
 
-print('Got data, calculating ohc ')
-data_weighted = data.thetao*dz.squeeze(drop=True)
-ohc_xy=data_weighted.sum(dim='lev')*rho_0*c_p
-ohc_xy.name='ohc'
-ohc_xy.attrs['long_name']='Ocean Heat Content, full depth integrated'
-ohc_xy.attrs['units']='J/m^2'     
-ohc_xy.attrs.update(attrs)
-   
-print('writing to file')
-ohc_xy.to_netcdf(save_dir+'pic_data/ohc_xy_pic.nc')
+with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
+
+    print('Got data, calculating ohc ')
+    data_weighted = data.thetao*dz.squeeze(drop=True)
+    ohc_xy=data_weighted.sum(dim='lev')*rho_0*c_p
+    ohc_xy.name='ohc'
+    ohc_xy.attrs['long_name']='Ocean Heat Content, full depth integrated'
+    ohc_xy.attrs['units']='J/m^2'     
+    ohc_xy.attrs.update(attrs)
+
+    print('writing to file')
+    ohc_xy.to_netcdf(save_dir+'pic_data/ohc_xy_pic.nc')
     
 print('All done')

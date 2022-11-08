@@ -17,7 +17,6 @@ Updated Nov 2022
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
 import utils
-import baspy as bp
 import xarray as xr
 from datetime import date
 
@@ -31,62 +30,53 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 save_dir = '../data_in/' #Directory to save data to
 
-griddata = xr.open_dataset(save_dir+'other_model_data/nemo_grid-T.nc')
+data_dir = '/gws/nopw/j04/smurphs/E/adittus/MASS_download/ocean/data_andrea/' # Holding accessible via JASMIN
+
+thkcello=xr.open_dataset('/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/historical/r1i1p1f3/Omon/thkcello/gn/v20190624/thkcello_Omon_HadGEM3-GC31-LL_historical_r1i1p1f3_gn_185001-189912.nc')
+dz=thkcello['thkcello'][0]
 
 depthlabels=['0-700m','0-2000m']
 depthbins = [[0,701],[0,2001]]
 nd = len(depthbins)
 
-# Generate dataframe with all temp data
-df = bp.catalogue(dataset='smurphs',Var=['thetao'])
-nt = len(bp.get_files(df.iloc[0]))
+exps=['hist-0p2','hist-0p4','hist-0p7','hist-1p0','hist-1p5']
+runs=['r1i1p1f2',' r2i1p1f2','r3i1p1f2','r4i1p1f2','r5i1p1f2']
 
-exps = set(df.Experiment)
-runs = set(df.RunID)
+startdate='1955-01-01'
+enddate='2015-01-01'
 
-fname_struct='Var_Model_Experiment_RunID_Frequency_StartDate-EndDate_grid'
-startdate=19550101
-enddate=20141231
+for exp in exps:
+    for run in runs:               
+        files = glob.glob('{}/{}/{}/Omon/thetao/gn/v20190213/thetao_*195001*.nc'.format(data_dir,exp,run))+ \
+                glob.glob('{}/{}/{}/Omon/thetao/gn/v20190213/thetao_*200001*.nc'.format(data_dir,exp,run))+ 
 
-def preproc_data(ds):
-    ds=ds.swap_dims({'time_counter':'time_centered'})
-    return ds.drop('deptht_bounds')
+        with xr.open_mfdataset(files,concat_dim='time',combine='nested',data_vars='minimal', coords='minimal', compat='override') as data:
+            print('Got data, calculating ohc ')
+            data=data.sel(time=slice(startdate,enddate))
+            data_weighted = data.thetao*dz
+            ohc_xy=data_weighted.sum(dim='lev')*rho_0*c_p
+            ohc_xy['exp']=exp
+            ohc_xy['run']=run
+            ohc_xy.name='ohc'
+            ohc_xy.attrs['long_name']='Ocean Heat Content, full depth integrated'
+            ohc_xy.attrs['units']='J/m^2'   
+            ohc_xy.attrs.update(attrs)   
 
-for index, row in df.iterrows():
-    exp = row[0]
-    run = row[1]
-    print('Opening row '+exp+' '+run)
-    files = bp.get_files(row)
-    # Pull out 1955 onwards
-    sfiles = utils.get_date_range_files(fname_struct,files,startdate,enddate)
-    print('Found ',len(sfiles),' files ')
+            ohc_xy_bybins=[]
+            for s in range(0,2):
+                foo=data_weighted.sel(deptht=slice(depthbins[s][0],depthbins[s][1])).sum(dim='lev')*rho_0*c_p
+                foo['depth_range']=depthlabels[s]
+                ohc_xy_bybins.append(foo)
+            ohc_xy_bybins=xr.concat(ohc_xy_bybins,'depth_range')  
+            ohc_xy_bybins['exp']=exp
+            ohc_xy_bybins['run']=run
+            ohc_xy_bybins.name='ohc'
+            ohc_xy_bybins.attrs['long_name']='Heat content, depth integrated'
+            ohc_xy_bybins.attrs['units']='J/m^2'   
+            ohc_xy_bybins.attrs.update(attrs)     
 
-    with xr.open_mfdataset(sfiles,preprocess=preproc_data,concat_dim='time_centered',combine='nested',data_vars='minimal', coords='minimal', compat='override') as data:
-        print('Got data, calculating ohc ')
-        data_weighted = data.thetao*griddata.thkcello.squeeze(drop=True)
-        ohc_xy=data_weighted.sum(dim='deptht')*rho_0*c_p
-        ohc_xy['exp']=exp
-        ohc_xy['run']=run
-        ohc_xy.name='ohc'
-        ohc_xy.attrs['long_name']='Ocean Heat Content, full depth integrated'
-        ohc_xy.attrs['units']='J/m^2'   
-        ohc_xy.attrs.update(attrs)   
-        
-        ohc_xy_bybins=[]
-        for s in range(0,2):
-            foo=data_weighted.sel(deptht=slice(depthbins[s][0],depthbins[s][1])).sum(dim='deptht')*rho_0*c_p
-            foo['depth_range']=depthlabels[s]
-            ohc_xy_bybins.append(foo)
-        ohc_xy_bybins=xr.concat(ohc_xy_bybins,'depth_range')  
-        ohc_xy_bybins['exp']=exp
-        ohc_xy_bybins['run']=run
-        ohc_xy_bybins.name='ohc'
-        ohc_xy_bybins.attrs['long_name']='Heat content, depth integrated'
-        ohc_xy_bybins.attrs['units']='J/m^2'   
-        ohc_xy_bybins.attrs.update(attrs)     
-   
-        ohc_xy.to_netcdf(save_dir+'ohc_xy/ohc_xy_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
-        ohc_xy_bybins.to_netcdf(save_dir+'ohc_xy/ohc_xy_bydepth_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
+            ohc_xy.to_netcdf(save_dir+'ohc_xy/ohc_xy_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
+            ohc_xy_bybins.to_netcdf(save_dir+'ohc_xy/ohc_xy_bydepth_'+exp+'_'+run+'_'+str(startdate)+'_'+str(enddate)+'.nc')
 
 print('All done')
     
