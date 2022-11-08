@@ -20,6 +20,7 @@ Updated Nov 2022
 import xarray as xr
 import glob
 import dask
+from datetime import date
 
 rho_0 = 1.027e3 # Standard density
 c_p = 3850 # Heat capacity of sea water
