@@ -71,7 +71,7 @@ for exp in exps:
         ohc_datasets={}
         ohc_bydepth_datasets={}       
 
-        with xr.open_mfdataset(files,concat_dim='time') as data:
+        with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
             print('Got data, calculating ohc')
             data_weighted = data['thetao']*vol
 
