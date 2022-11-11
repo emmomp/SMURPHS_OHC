@@ -62,9 +62,7 @@ basin_longname={
         'pac':'Pacific',
         }
 
-files = glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_18*.nc'.format(data_dir))+ \
-     glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_19*.nc'.format(data_dir)) + \
-     glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_200*.nc'.format(data_dir))
+files = glob.glob('{}/thetao/gn/v20190628/thetao_*.nc'.format(data_dir))
 
 
 with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
