@@ -71,31 +71,31 @@ with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
 
     for basin in basin_masks.keys():        
     # Check if output already exists
-    files = glob.glob(save_dir+'ohc_tseries/pic_data/ohc_pic_'+basin+'.nc')
-    if len(files)==2:
-        print('Skipping {}'.format(basin))
-    else:    
-        print(basin)
-        data_masked = data_weighted.where(basin_masks[basin])
-        vol_masked = vol.where(basin_masks[basin])
-        ohc=data_masked.sum(dim=['i','j','lev'])/vol_masked.sum(dim=['i','j','lev'])*rho_0*c_p
+        files = glob.glob(save_dir+'ohc_tseries/pic_data/ohc_pic_'+basin+'.nc')
+        if len(files)==2:
+            print('Skipping {}'.format(basin))
+        else:    
+            print(basin)
+            data_masked = data_weighted.where(basin_masks[basin])
+            vol_masked = vol.where(basin_masks[basin])
+            ohc=data_masked.sum(dim=['i','j','lev'])/vol_masked.sum(dim=['i','j','lev'])*rho_0*c_p
 
-        data_masked_binned = data_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
-        vol_masked_binned = vol_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
-        ohc_bydepth=data_masked_binned.sum(dim=['i','j','lev'])/vol_masked_binned.sum(dim=['i','j','lev'])*rho_0*c_p     
+            data_masked_binned = data_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
+            vol_masked_binned = vol_masked.groupby_bins(data.lev,depthbins,labels=depthlabels)
+            ohc_bydepth=data_masked_binned.sum(dim=['i','j','lev'])/vol_masked_binned.sum(dim=['i','j','lev'])*rho_0*c_p     
 
-        ohc.name='ohc'
-        ohc.attrs['long_name']=basin_longname[basin]+' depth integrated ocean heat content, volume averaged'
-        ohc.attrs['units']='J/m**3'
-        ohc['basin']=basin
-        ohc.attrs.update(attrs)     
-        ohc.to_netcdf(save_dir+'pic_data/ohc_pic_'+basin+'.nc')
+            ohc.name='ohc'
+            ohc.attrs['long_name']=basin_longname[basin]+' depth integrated ocean heat content, volume averaged'
+            ohc.attrs['units']='J/m**3'
+            ohc['basin']=basin
+            ohc.attrs.update(attrs)     
+            ohc.to_netcdf(save_dir+'pic_data/ohc_pic_'+basin+'.nc')
 
-        ohc_bydepth.name='ohc'
-        ohc_bydepth.attrs['long_name']=basin_longname[basin]+' heat content by depth bin, volume averaged'
-        ohc_bydepth.attrs['units']='J/m**3'   
-        ohc_bydepth['basin']=basin
-        ohc_bydepth.attrs.update(attrs)     
-        ohc_bydepth.to_netcdf(save_dir+'pic_data/ohc_pic_bydepth_'+basin+'.nc')
+            ohc_bydepth.name='ohc'
+            ohc_bydepth.attrs['long_name']=basin_longname[basin]+' heat content by depth bin, volume averaged'
+            ohc_bydepth.attrs['units']='J/m**3'   
+            ohc_bydepth['basin']=basin
+            ohc_bydepth.attrs.update(attrs)     
+            ohc_bydepth.to_netcdf(save_dir+'pic_data/ohc_pic_bydepth_'+basin+'.nc')
 
 print('All Done')
