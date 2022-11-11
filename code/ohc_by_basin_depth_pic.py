@@ -69,7 +69,12 @@ with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
     print('Got data, calculating ohc')
     data_weighted = data['thetao']*vol
 
-    for basin in basin_masks.keys():
+    for basin in basin_masks.keys():        
+    # Check if output already exists
+    files = glob.glob(save_dir+'ohc_tseries/pic_data/ohc_pic_'+basin+'.nc')
+    if len(files)==2:
+        print('Skipping {}'.format(basin))
+    else:    
         print(basin)
         data_masked = data_weighted.where(basin_masks[basin])
         vol_masked = vol.where(basin_masks[basin])
