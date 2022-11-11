@@ -14,7 +14,6 @@ Updated Nov 2022
 
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
-import baspy as bp
 import xarray as xr
 import utils
 from datetime import date

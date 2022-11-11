@@ -28,11 +28,11 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 save_dir = '../data_in/' #Directory to save data to
 
-exps=['historical0p2','historical0p4','historical0p7','historical1p0','historical1p5']
+exps=['hist-0p2','hist-0p4','hist-0p7','hist-1p0','hist-1p5']
 runs=['r1i1p1f1','r2i1p1f1','r3i1p1f1','r4i1p1f1','r5i1p1f1']
 
-startdate=19550101
-enddate=20141231
+startdate='1955-01-01'
+enddate='2015-01-01'
 
 trend_startdates=['1960-01-16','1980-01-16']
 trend_enddates=['1990-12-16','2010-12-16']
@@ -47,7 +47,7 @@ for exp in exps:
     ds=xr.open_mfdataset(save_dir+'ohc_xy/ohc_xy_'+exp+'_*_'+str(startdate)+'_'+str(enddate)+'.nc',combine='nested',concat_dim='run')
     foo.append(ds)
 ohc_xy=xr.concat(foo,'exp') 
-ohc_xy['time_mths']=('time_centered',np.arange(0,721))
+ohc_xy['time_mths']=('time',np.arange(0,721))
 print('ohc data loaded, running linear regressions')
 
 run_fit=[]
@@ -55,14 +55,14 @@ all_fit=[]
 for tchunk in range(0,2):
     #fit all runs
     tslice=slice(trend_startdates[tchunk],trend_enddates[tchunk])
-    xx=ohc_xy['time_mths'].sel(time_centered=tslice)
-    yy=ohc_xy['ohc'].sel(time_centered=tslice)
-    lin_fit=utils.lin_regress(xx,yy,[["time_centered"], ["time_centered"]])
+    xx=ohc_xy['time_mths'].sel(time=tslice)
+    yy=ohc_xy['ohc'].sel(time=tslice)
+    lin_fit=utils.lin_regress(xx,yy,[["time"], ["time"]])
     lin_fit=lin_fit.assign_coords(time=trend_middates[tchunk])
     run_fit.append(lin_fit)
     #fit run mean
     yy=yy.mean(dim='run')
-    lin_fit=utils.lin_regress(xx,yy,[["time_centered"], ["time_centered"]])
+    lin_fit=utils.lin_regress(xx,yy,[["time"], ["time"]])
     lin_fit=lin_fit.assign_coords(time=trend_middates[tchunk]) 
     all_fit.append(lin_fit)
     
@@ -71,16 +71,13 @@ all_fit=xr.concat(all_fit,'time')
 
 # Load drift
 drift=xr.open_dataarray(save_dir+'pic_data/ohc_xy_pic_drift.nc')
-drift=drift.rename({'j':'y','i':'x','latitude':'nav_lat','longitude':'nav_lon'})
 
 # Remove drift
-ny=run_fit['y'].size
-nx=run_fit['x'].size
-run_fit = run_fit.isel(y=slice(1,ny-1),x=slice(1,nx-1))-drift
-all_fit=all_fit.isel(y=slice(1,ny-1),x=slice(1,nx-1))-drift
+run_fit = run_fit-drift
+all_fit=all_fit-drift
 
 print('regressions finished, regridding for plots')
-resample_data=utils.setup_regrid(run_fit.nav_lon,run_fit.nav_lat)
+resample_data=utils.setup_regrid(run_fit.longitude,run_fit.latitude)
 
 for tchunk in range(0,2):
     print('Trends '+str(y_start[tchunk])+' '+str(y_end[tchunk]))
