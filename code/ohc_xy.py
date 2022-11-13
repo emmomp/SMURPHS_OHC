@@ -16,7 +16,7 @@ Updated Nov 2022
 
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
-import utils
+import glob
 import xarray as xr
 from datetime import date
 
@@ -48,7 +48,7 @@ enddate='2015-01-01'
 for exp in exps:
     for run in runs:               
         files = glob.glob('{}/{}/{}/Omon/thetao/gn/v20190213/thetao_*195001*.nc'.format(data_dir,exp,run))+ \
-                glob.glob('{}/{}/{}/Omon/thetao/gn/v20190213/thetao_*200001*.nc'.format(data_dir,exp,run))+ 
+                glob.glob('{}/{}/{}/Omon/thetao/gn/v20190213/thetao_*200001*.nc'.format(data_dir,exp,run)) 
 
         with xr.open_mfdataset(files,concat_dim='time',combine='nested',data_vars='minimal', coords='minimal', compat='override') as data:
             print('Got data, calculating ohc ')
@@ -64,7 +64,7 @@ for exp in exps:
 
             ohc_xy_bybins=[]
             for s in range(0,2):
-                foo=data_weighted.sel(deptht=slice(depthbins[s][0],depthbins[s][1])).sum(dim='lev')*rho_0*c_p
+                foo=data_weighted.sel(lev=slice(depthbins[s][0],depthbins[s][1])).sum(dim='lev')*rho_0*c_p
                 foo['depth_range']=depthlabels[s]
                 ohc_xy_bybins.append(foo)
             ohc_xy_bybins=xr.concat(ohc_xy_bybins,'depth_range')  

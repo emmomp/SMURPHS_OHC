@@ -19,6 +19,7 @@ Updated Nov 2022
 """
 from datetime import date
 import xarray as xr
+import glob
 
 rho_0 = 1.027e3 
 c_p = 3850
@@ -34,9 +35,7 @@ data_dir = '/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/piControl/r1i1p1f1/
 thkcello=xr.open_dataset('{}/thkcello/gn/v20190628/thkcello_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_185001-189912.nc'.format(data_dir))
 dz=thkcello['thkcello'][0]
 
-files = glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_18*.nc'.format(data_dir))+ \
-     glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_19*.nc'.format(data_dir)) + \
-     glob.glob('{}/thetao/gn/v20190628/thetao_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_200*.nc'.format(data_dir))
+files = glob.glob('{}/thetao/gn/v20190628/thetao_*.nc'.format(data_dir))
 
 with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
 
