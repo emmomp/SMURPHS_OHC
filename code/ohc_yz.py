@@ -28,6 +28,8 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 save_dir = '../data_in/' #Directory to save data to
 
+data_dir = '/gws/nopw/j04/smurphs/E/adittus/MASS_download/ocean/data_andrea/' # Holding accessible via JASMIN
+
 griddata = xr.open_dataset(save_dir+'other_model_data/nemo_grid-T.nc')
 dx=griddata.e1t
 # Match up grid formats by removing NEMO halo and renaming coords
@@ -69,7 +71,7 @@ for exp in exps:
                 data=data.sel(time=slice(startdate,enddate))
                 data_weighted = data.thetao*dx
                 ohc_yz=data_weighted.sum(dim='i')*rho_0*c_p
-                ohc_yz.coords['lat']=data.latitude.mean(dim='x')
+                ohc_yz.coords['lat']=data.latitude.mean(dim='i')
                 ohc_yz['exp']=exp
                 ohc_yz['run']=run
                 ohc_yz.name='ohc'
@@ -82,7 +84,7 @@ for exp in exps:
                     print(basin)
                     data_masked = data_weighted.where(basin_masks[basin])
                     ohc_yz=data_masked.sum(dim='i')*rho_0*c_p
-                    ohc_yz.coords['lat']=data.latitude.mean(dim='x')
+                    ohc_yz.coords['lat']=data.latitude.mean(dim='i')
                     ohc_yz['exp']=exp
                     ohc_yz['run']=run
                     ohc_yz.name='ohc'

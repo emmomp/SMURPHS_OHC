@@ -27,6 +27,7 @@ attrs={'contact':'emmomp@bas.ac.uk',
        'notes':'Data produced by analysis of HadGem3-GC31-LL CMIP6 PIC data, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995'}
 
 save_dir = '../data_in/' #Directory to save data to
+data_dir = '/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/piControl/r1i1p1f1/Omon' # Holding accessible via JASMIN
 
 griddata = xr.open_dataset(save_dir+'other_model_data/nemo_grid-T.nc')
 dx=griddata.e1t
@@ -46,9 +47,6 @@ basin_masks={
         'pac':masks.tmaskpac.astype(bool)
             }
 
-save_dir = '../data_in/' #Directory to save data to
-data_dir = '/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/piControl/r1i1p1f1/Omon' # Holding accessible via JASMIN
-
 files = glob.glob('{}/thetao/gn/v20190628/thetao_*.nc'.format(data_dir))
 
 with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
@@ -56,7 +54,7 @@ with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
     print('global')
     data_weighted=data.thetao*dx
     ohc_yz=data_weighted.sum(dim='i')*rho_0*c_p
-    ohc_yz['latitude']=data_weighted['latitude'].mean(dim='x')
+    ohc_yz['latitude']=data_weighted['latitude'].mean(dim='i')
     ohc_yz.name='ohc'
     ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
     ohc_yz.attrs['units']='J/m^2'    
@@ -67,7 +65,7 @@ with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
         print(basin)
         data_masked = data_weighted.where(basin_masks[basin])
         ohc_yz=data_masked.sum(dim='i')*rho_0*c_p
-        ohc_yz['nav_lat']=data_weighted['latitude'].mean(dim='x')
+        ohc_yz['nav_lat']=data_weighted['latitude'].mean(dim='i')
         ohc_yz.name='ohc'
         ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
         ohc_yz.attrs['units']='J/m^2'    
