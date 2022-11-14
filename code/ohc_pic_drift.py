@@ -18,6 +18,9 @@ Updated Nov 2022
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
 import xarray as xr
+import sys
+import os
+sys.path.append(os.getcwd()) #needed if using slurm
 import utils
 import numpy as np
 from datetime import date
