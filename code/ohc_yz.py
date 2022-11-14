@@ -29,9 +29,9 @@ save_dir = '../data_in/' #Directory to save data to
 
 griddata = xr.open_dataset(save_dir+'other_model_data/nemo_grid-T.nc')
 dx=griddata.e1t
-# Match up grid formats by removing NEMO halo
+# Match up grid formats by removing NEMO halo and renaming coords
 dx=dx.isel(x=slice(1,-1),y=slice(1,-1)) 
-dx=dx.rename({'x':'i','y':'j'})
+dx=dx.rename({'x':'i','y':'j','nav_lon':'longitude','nav_lat':'latitude'})
 
 exps=['hist-0p2','hist-0p4','hist-0p7','hist-1p0','hist-1p5']
 runs=['r1i1p1f2','r2i1p1f2','r3i1p1f2','r4i1p1f2','r5i1p1f2']
@@ -42,8 +42,7 @@ masks=masks.isel(x=slice(1,-1),y=slice(1,-1))
 masks=masks.rename({'x':'i','y':'j'})
 
 basin_masks={
-        'global':xr.full_like(dx,True),
-        'so':(vol.latitude<=-35.0),
+        'so':(dx.latitude<=-35.0),
         'atl':masks.tmaskatl.astype(bool),
         'ind':masks.tmaskind.astype(bool),
         'pac':masks.tmaskpac.astype(bool)
