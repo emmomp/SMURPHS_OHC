@@ -29,7 +29,7 @@ attrs={'contact':'emmomp@bas.ac.uk',
 
 exps=['hist-0p2','hist-0p4','hist-0p7','hist-1p0','hist-1p5']
 
-volcello=xr.open_dataset(data_dir+'/volcello/gn/v20190628/volcello_Omon_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn_185001-189912.nc')
+volcello=xr.open_dataset('/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/historical/r1i1p1f3/Omon/volcello/gn/v20190624/volcello_Omon_HadGEM3-GC31-LL_historical_r1i1p1f3_gn_185001-189912.nc')
 vol=volcello['volcello'][0]
 
 # Open model ohc time series
