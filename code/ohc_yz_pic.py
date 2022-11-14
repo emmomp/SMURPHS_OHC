@@ -15,7 +15,6 @@ Created on Mon Nov 29 15:52:09 2021
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
 from datetime import date
-import baspy as bp
 import xarray as xr
 
 rho_0 = 1.027e3 
@@ -30,48 +29,48 @@ save_dir = '../data_in/' #Directory to save data to
 
 griddata = xr.open_dataset(save_dir+'other_model_data/nemo_grid-T.nc')
 dx=griddata.e1t
-ny=dx['y'].size
-nx=dx['x'].size
-dx=dx.isel(y=slice(1,ny-1),x=slice(1,nx-1))
-
-df = bp.catalogue(dataset='cmip6',Var=['thetao'],Model='HadGEM3-GC31-LL',Experiment='piControl')
-data= bp.open_dataset(df)
+# Match up grid formats by removing NEMO halo and renaming coords
+dx=dx.isel(x=slice(1,-1),y=slice(1,-1)) 
+dx=dx.rename({'x':'i','y':'j','nav_lon':'longitude','nav_lat':'latitude'})
 
 masks=xr.open_dataset(save_dir+'other_model_data/subbasins_eORCA1-GO6-Daley.nc')
-masks=masks.isel(y=slice(1,ny-1),x=slice(1,nx-1))
+# Match up grid formats by removing NEMO halo
+masks=masks.isel(x=slice(1,-1),y=slice(1,-1)) 
+masks=masks.rename({'x':'i','y':'j'})
 
 basin_masks={
-        'so':(masks.nav_lat<=-35.0),
+        'so':(dx.latitude<=-35.0),
         'atl':masks.tmaskatl.astype(bool),
         'ind':masks.tmaskind.astype(bool),
         'pac':masks.tmaskpac.astype(bool)
             }
 
+save_dir = '../data_in/' #Directory to save data to
+data_dir = '/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/piControl/r1i1p1f1/Omon' # Holding accessible via JASMIN
 
-print('Got data, calculating ohc')
-data_slice = data.thetao.isel(time=slice(0,6000))
-data_slice=data_slice.rename({'j':'y','i':'x','latitude':'nav_lat','longitude':'nav_lon','lev':'deptht'})
-data_weighted=data_slice*dx.squeeze(drop=True)
+files = glob.glob('{}/thetao/gn/v20190628/thetao_*.nc'.format(data_dir))
 
-ohc_yz=data_weighted.sum(dim='x')*rho_0*c_p
-ohc_yz['nav_lat']=data_weighted['nav_lat'].mean(dim='x')
-ohc_yz.name='ohc'
-ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
-ohc_yz.attrs.update(attrs)    
-ohc_yz.attrs['units']='J/m^2'       
-   
-print('writing global to file')
-ohc_yz.to_netcdf(save_dir+'pic_data/ohc_yz_global_pic.nc')
-
-for basin in basin_masks.keys():
-    print(basin)
-    data_masked = data_weighted.where(basin_masks[basin])
-    ohc_yz=data_masked.sum(dim='x')*rho_0*c_p
-    ohc_yz['nav_lat']=data_weighted['nav_lat'].mean(dim='x')
+with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
+    
+    print('global')
+    data_weighted=data.thetao*dx
+    ohc_yz=data_weighted.sum(dim='x')*rho_0*c_p
+    ohc_yz['latitude']=data_weighted['latitude'].mean(dim='x')
     ohc_yz.name='ohc'
     ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
     ohc_yz.attrs['units']='J/m^2'    
     ohc_yz.attrs.update(attrs)     
-    ohc_yz.to_netcdf(save_dir+'pic_data/ohc_yz_'+basin+'_pic.nc')
+    ohc_yz.to_netcdf(save_dir+'pic_data/ohc_yz_global_pic.nc')
+    
+    for basin in basin_masks.keys():
+        print(basin)
+        data_masked = data_weighted.where(basin_masks[basin])
+        ohc_yz=data_masked.sum(dim='x')*rho_0*c_p
+        ohc_yz['nav_lat']=data_weighted['nav_lat'].mean(dim='x')
+        ohc_yz.name='ohc'
+        ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
+        ohc_yz.attrs['units']='J/m^2'    
+        ohc_yz.attrs.update(attrs)     
+        ohc_yz.to_netcdf(save_dir+'pic_data/ohc_yz_'+basin+'_pic.nc')
 
 print('all done')
