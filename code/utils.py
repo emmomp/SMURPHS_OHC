@@ -90,10 +90,8 @@ def polyfit_xr(ohc_global,nd=4):
     ohc_global.time_days, 
     ohc_global.ohc,  
     nd, 
-    input_core_dims=[["time_centered"], ["time_centered"], []],  # list with one entry per arg
-#    output_core_dims=[["coeffs",],["time_centered",]],  # returned data has one dimension
+    input_core_dims=[["time"], ["time"], []],  # list with one entry per arg
     output_core_dims=[["coeffs",]],  # returned data has one dimension
-   # exclude_dims=set(("lat",)),  # dimensions allowed to change size. Must be a set!
     vectorize=True,  # loop over non-core dims
     dask="parallelized",
     output_dtypes=["float64"],  # one per output
@@ -106,8 +104,8 @@ def polyval_xr(model,x):
     np.polyval,  # first the function
     model,  # now arguments in the order expected by 'interp1_np'
     x,  # as above
-    input_core_dims=[["coeffs"], ["time_centered"]],  # list with one entry per arg
-    output_core_dims=[["time_centered"]],  # returned data has one dimension
+    input_core_dims=[["coeffs"], ["time"]],  # list with one entry per arg
+    output_core_dims=[["time"]],  # returned data has one dimension
     vectorize=True,  # loop over non-core dims
     dask="parallelized",
     output_dtypes=["float64"],  # one per output
