@@ -16,6 +16,7 @@ Updated Nov 2022
 """
 import xarray as xr
 from datetime import date
+import glob
 
 rho_0 = 1.027e3 
 c_p = 3850
