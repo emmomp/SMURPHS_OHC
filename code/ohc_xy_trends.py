@@ -29,7 +29,7 @@ attrs={'contact':'emmomp@bas.ac.uk',
 save_dir = '../data_in/' #Directory to save data to
 
 exps=['hist-0p2','hist-0p4','hist-0p7','hist-1p0','hist-1p5']
-runs=['r1i1p1f1','r2i1p1f1','r3i1p1f1','r4i1p1f1','r5i1p1f1']
+runs=['r1i1p1f2','r2i1p1f2','r3i1p1f2','r4i1p1f2','r5i1p1f2']
 
 startdate='1955-01-01'
 enddate='2015-01-01'
