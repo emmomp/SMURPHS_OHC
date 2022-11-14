@@ -55,7 +55,7 @@ enddate='2015-01-01'
 for exp in exps:
     for run in runs:   
         # Check if output already exists
-        files = glob.glob(save_dir+'ohc_xy/ohc_*'+exp+'_'+run+'*nc')
+        files = glob.glob(save_dir+'ohc_yz/ohc_yz_*'+exp+'_'+run+'*nc')
         if len(files)==2:
             print('Skipping '+exp+' '+run)
         else:        
@@ -68,8 +68,8 @@ for exp in exps:
                 print('Got data, calculating ohc ')
                 data=data.sel(time=slice(startdate,enddate))
                 data_weighted = data.thetao*dx
-                ohc_yz=data_weighted.sum(dim='x')*rho_0*c_p
-                ohc_yz.coords['lat']=data.nav_lat.mean(dim='x')
+                ohc_yz=data_weighted.sum(dim='i')*rho_0*c_p
+                ohc_yz.coords['lat']=data.latitude.mean(dim='x')
                 ohc_yz['exp']=exp
                 ohc_yz['run']=run
                 ohc_yz.name='ohc'
@@ -81,8 +81,8 @@ for exp in exps:
                 for basin in basin_masks.keys():
                     print(basin)
                     data_masked = data_weighted.where(basin_masks[basin])
-                    ohc_yz=data_masked.sum(dim='x')*rho_0*c_p
-                    ohc_yz.coords['lat']=data.nav_lat.mean(dim='x')
+                    ohc_yz=data_masked.sum(dim='i')*rho_0*c_p
+                    ohc_yz.coords['lat']=data.latitude.mean(dim='x')
                     ohc_yz['exp']=exp
                     ohc_yz['run']=run
                     ohc_yz.name='ohc'

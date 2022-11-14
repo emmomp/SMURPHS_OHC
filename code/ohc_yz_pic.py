@@ -55,7 +55,7 @@ with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
     
     print('global')
     data_weighted=data.thetao*dx
-    ohc_yz=data_weighted.sum(dim='x')*rho_0*c_p
+    ohc_yz=data_weighted.sum(dim='i')*rho_0*c_p
     ohc_yz['latitude']=data_weighted['latitude'].mean(dim='x')
     ohc_yz.name='ohc'
     ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
@@ -66,8 +66,8 @@ with xr.open_mfdataset(files,concat_dim='time',combine='nested') as data:
     for basin in basin_masks.keys():
         print(basin)
         data_masked = data_weighted.where(basin_masks[basin])
-        ohc_yz=data_masked.sum(dim='x')*rho_0*c_p
-        ohc_yz['nav_lat']=data_weighted['nav_lat'].mean(dim='x')
+        ohc_yz=data_masked.sum(dim='i')*rho_0*c_p
+        ohc_yz['nav_lat']=data_weighted['latitude'].mean(dim='x')
         ohc_yz.name='ohc'
         ohc_yz.attrs['long_name']='Ocean Heat Content, zonally integrated'
         ohc_yz.attrs['units']='J/m^2'    
