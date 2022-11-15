@@ -32,8 +32,8 @@ exps=['hist-0p2','hist-0p4','hist-0p7','hist-1p0','hist-1p5']
 runs=['r1i1p1f2','r2i1p1f2','r3i1p1f2','r4i1p1f2','r5i1p1f2']
 basins=['global','so','pac','atl','ind']
 
-startdate=19550101
-enddate=20141231
+startdate='1955-01-01'
+enddate='2015-01-01'
 
 trend_startdates=['1960-01-16','1980-01-16']
 trend_enddates=['1990-12-16','2010-12-16']
