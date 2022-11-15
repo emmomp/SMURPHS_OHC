@@ -31,8 +31,8 @@ save_dir = '../data_in/' #Directory to save data to
 exps=['hist-0p2','hist-0p4','hist-0p7','hist-1p0','hist-1p5']
 runs=['r1i1p1f2','r2i1p1f2','r3i1p1f2','r4i1p1f2','r5i1p1f2']
 
-startdate=19550101
-enddate=20141231
+startdate='1955-01-01'
+enddate='2015-01-01'
 
 trend_startdates=['1960-01-16','1980-01-16']
 trend_enddates=['1990-12-16','2010-12-16']
@@ -47,7 +47,7 @@ for exp in exps:
     ds=xr.open_mfdataset(save_dir+'ohc_xy/ohc_xy_'+exp+'_*_'+str(startdate)+'_'+str(enddate)+'.nc',combine='nested',concat_dim='run')
     foo.append(ds)
 ohc_xy=xr.concat(foo,'exp') 
-ohc_xy['time_mths']=('time',np.arange(0,721))
+ohc_xy['time_mths']=('time',np.arange(0,720))
 print('ohc data loaded, running linear regressions')
 
 run_fit=[]
