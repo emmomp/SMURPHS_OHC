@@ -47,7 +47,7 @@ for ie,exp in enumerate(exps):
         ds['basin']=(('basin'),[basin,])
         foo[ie].append(ds)
 ohc_yz=xr.combine_nested(foo,concat_dim=['exp','basin']) 
-ohc_yz['time_mths']=('time',np.arange(0,721)) 
+ohc_yz['time_mths']=('time',np.arange(0,720)) 
 
 print('ohc data loaded, running linear regressions')
 

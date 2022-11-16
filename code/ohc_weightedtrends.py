@@ -51,8 +51,8 @@ ohc_0700=ohc_global.ohc.sel(lev_bins=['0-300m','300-700m']).sum(dim='lev_bins')
 ohc_02000=ohc_global.ohc.sel(lev_bins=['0-300m','300-700m','700-2000m']).sum(dim='lev_bins')
 
 # Multiply by vols to retrieve total OHC
-ohc_0700=ohc_0700*volcello.sel(lev=slice(None,700)).sum()
-ohc_02000=ohc_02000*volcello.sel(lev=slice(None,2000)).sum()
+ohc_0700=ohc_0700*vol.sel(lev=slice(None,700)).sum()
+ohc_02000=ohc_02000*vol.sel(lev=slice(None,2000)).sum()
 
 # Linear fit to 1955-2015
 long_fit_0700=utils.lin_regress(ohc_global.time_mths.sel(time=slice('1955-01-01',None)),ohc_0700.sel(time=slice('1955-01-01',None)),[["time"], ["time"]])
