@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ohc_weightedtrends.py
+ohc_trends.py
 
-Code to load global ocean heat content time series and calculate weighted linear trends.
+Code to load global ocean heat content time series and calculate linear trends.
 Global ocean heat content data from the SMURPHS ensemble, produce using ohc_by_basin_depth.py
 
 Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
@@ -54,6 +54,8 @@ ohc_02000=ohc_global.ohc.sel(lev_bins=['0-300m','300-700m','700-2000m']).sum(dim
 ohc_0700=ohc_0700*vol.sel(lev=slice(None,700)).sum()
 ohc_02000=ohc_02000*vol.sel(lev=slice(None,2000)).sum()
 
+print('Fitting 1995-2015')
+
 # Linear fit to 1955-2015
 long_fit_0700=utils.lin_regress(ohc_global.time_mths.sel(time=slice('1955-01-01',None)),ohc_0700.sel(time=slice('1955-01-01',None)),[["time"], ["time"]])
 long_fit_0700['drange']='OHC0-700m'
@@ -61,11 +63,15 @@ long_fit_02000=utils.lin_regress(ohc_global.time_mths.sel(time=slice('1955-01-01
 long_fit_02000['drange']='OHC0-2000m'
 long_fit=xr.concat([long_fit_0700,long_fit_02000],'drange')
 
+print('Writing to file')
+
 long_fit.attrs.update(attrs)  
 long_fit.name='stats'
 long_fit.attrs['description']='Linear fit statistics for 1955-2015 SMURPHS 0-700m and 0-2000m OHC time series'
 long_fit.attrs['slope_units']='x10^22 J/mth'
 long_fit.to_netcdf(save_dir+'ohc_trends/longfit_model.nc')
+
+print('Fitting 30y chunks')
 
 # Running 30 year fits
 
@@ -90,6 +96,8 @@ all_fits_02000=all_fits_02000.swap_dims({'time_mths':'time_years'})
 all_fits_02000['drange']='OHC0-2000m'
 
 all_fits=xr.concat([all_fits_0700,all_fits_02000],'drange')
+
+print('Writing to file')
 
 all_fits.attrs.update(attrs)  
 all_fits.name='stats'
