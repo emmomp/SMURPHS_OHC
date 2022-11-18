@@ -28,9 +28,12 @@ attrs={'contact':'emmomp@bas.ac.uk',
        'notes':'Data produced by analysis of the SMURPHS ensemble, See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806'}
 
 exps=['hist-0p2','hist-0p4','hist-0p7','hist-1p0','hist-1p5']
+depthlabels=['0-300m','300-700m','700-2000m','2km+']
+depthbins = [0,300,700,2000,6001]
 
 volcello=xr.open_dataset('/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/historical/r1i1p1f3/Omon/volcello/gn/v20190624/volcello_Omon_HadGEM3-GC31-LL_historical_r1i1p1f3_gn_185001-189912.nc')
 vol=volcello['volcello'][0]
+vol_binned=vol.groupby_bins(vol.lev,depthbins,labels=depthlabels)
 
 # Open model ohc time series
 ohc_global=[]
@@ -46,13 +49,12 @@ time_months=xr.DataArray(dims=['time',],data=np.arange(0,1980))
 # Remove drift
 ohc_global['ohc']=(ohc_global['ohc']-(ohc_pic_drift.sel(basin='global')*1e18*time_months))/1e22
 
+# Multiply by vols to retrieve total OHC
+ohc_global['ohc']=ohc_global['ohc']*vol_binned.sum(['i','j','lev'])
+
 # Create two summed ranges
 ohc_0700=ohc_global.ohc.sel(lev_bins=['0-300m','300-700m']).sum(dim='lev_bins')
 ohc_02000=ohc_global.ohc.sel(lev_bins=['0-300m','300-700m','700-2000m']).sum(dim='lev_bins')
-
-# Multiply by vols to retrieve total OHC
-ohc_0700=ohc_0700*vol.sel(lev=slice(None,700)).sum()
-ohc_02000=ohc_02000*vol.sel(lev=slice(None,2000)).sum()
 
 print('Fitting 1995-2015')
 
@@ -104,3 +106,5 @@ all_fits.name='stats'
 all_fits.attrs['description']='Linear fit statistics for running 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
 all_fits.attrs['slope_units']='x10^22 J/mth'
 all_fits.to_netcdf(save_dir+'ohc_trends/allfit_model.nc')
+
+print('All done')
