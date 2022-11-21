@@ -73,8 +73,8 @@ all_fit=xr.concat(all_fit,'time')
 drift=xr.open_dataarray(save_dir+'pic_data/ohc_xy_pic_drift.nc')
 
 # Remove drift
-run_fit = run_fit-drift
-all_fit=all_fit-drift
+run_fit.loc[dict(parameter='slope')]=run_fit.loc[dict(parameter='slope')]-drift
+all_fit.loc[dict(parameter='slope')]=all_fit.loc[dict(parameter='slope')]-drift
 
 print('regressions finished, regridding for plots')
 resample_data=utils.setup_regrid(run_fit.longitude,run_fit.latitude)

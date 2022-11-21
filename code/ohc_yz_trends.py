@@ -74,8 +74,8 @@ all_fit=xr.concat(all_fit,'time')
 drift=xr.open_dataarray(save_dir+'pic_data/ohc_yz_pic_drift.nc')
 
 # Remove drift
-run_slope= run_fit-drift
-all_slope=all_fit-drift
+run_slope.loc[dict(parameter='slope')]=run_fit.loc[dict(parameter='slope')]-drift
+all_slope.loc[dict(parameter='slope')]=all_fit.loc[dict(parameter='slope')]-drift
 
 print('regressions finished, writing to file')
 all_slope.attrs.update(attrs)
