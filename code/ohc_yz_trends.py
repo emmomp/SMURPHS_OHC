@@ -74,18 +74,18 @@ all_fit=xr.concat(all_fit,'time')
 drift=xr.open_dataarray(save_dir+'pic_data/ohc_yz_pic_drift.nc')
 
 # Remove drift
-run_slope.loc[dict(parameter='slope')]=run_fit.loc[dict(parameter='slope')]-drift
-all_slope.loc[dict(parameter='slope')]=all_fit.loc[dict(parameter='slope')]-drift
+run_slope=run_fit.loc[dict(parameter='slope')]-drift
+all_slope=all_fit.loc[dict(parameter='slope')]-drift
 
 print('regressions finished, writing to file')
 all_slope.attrs.update(attrs)
 all_slope.name='stats'
-all_slope.attrs['description']='Linear fit statistics for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
-all_slope.attrs['slope_units']='x10^22 J/m^2/mth'
+all_slope.attrs['description']='Linear fit slope for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
+all_slope.attrs['units']='x10^22 J/m^2/mth'
 run_slope.attrs.update(attrs)
 run_slope.name='stats'
-run_slope.attrs['description']='Linear fit statistics for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
-run_slope.attrs['slope_units']='x10^22 J/m^2/mth'
+run_slope.attrs['description']='Linear fit slope for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
+run_slope.attrs['units']='x10^22 J/m^2/mth'
 
 all_slope.to_netcdf(save_dir+'ohc_yz/ohc_yz_trend_runmean.nc')
 run_slope.to_netcdf(save_dir+'ohc_yz/ohc_yz_trend_byrun.nc')    
