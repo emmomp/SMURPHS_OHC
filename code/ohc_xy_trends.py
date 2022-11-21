@@ -73,16 +73,16 @@ all_fit=xr.concat(all_fit,'time')
 drift=xr.open_dataarray(save_dir+'pic_data/ohc_xy_pic_drift.nc')
 
 # Remove drift
-run_fit.loc[dict(parameter='slope')]=run_fit.loc[dict(parameter='slope')].load()-drift.load()
-all_fit.loc[dict(parameter='slope')]=all_fit.loc[dict(parameter='slope')].load()-drift.load()
+run_slope=run_fit.loc[dict(parameter='slope')]-drift
+all_slope=all_fit.loc[dict(parameter='slope')]-drift
 
 print('regressions finished, regridding for plots')
-resample_data=utils.setup_regrid(run_fit.longitude,run_fit.latitude)
+resample_data=utils.setup_regrid(run_slope.longitude,run_slope.latitude)
 
 for tchunk in range(0,2):
     print('Trends '+str(y_start[tchunk])+' '+str(y_end[tchunk]))
-    all_fit_regrid=utils.repeat_regrid(all_fit.isel(parameter=0,time=tchunk),False,resample_data)
-    all_fit_regrid['time']=all_fit['time'][tchunk]
+    all_fit_regrid=utils.repeat_regrid(all_slope.isel(time=tchunk),False,resample_data)
+    all_fit_regrid['time']=all_slope['time'][tchunk]
     all_fit_regrid.attrs.update(attrs)
     all_fit_regrid.name='stats'  
     all_fit_regrid.attrs['description']='Linear fit slope for 30 year sections of SMURPHS 0-700m and 0-2000m OHC time series'
@@ -91,9 +91,9 @@ for tchunk in range(0,2):
     
     run_fit_regrid=[]
     for run in runs:
-        dplot=utils.repeat_regrid(run_fit.sel(run=run).isel(parameter=0,time=tchunk),False,resample_data)
+        dplot=utils.repeat_regrid(run_slope.sel(run=run).isel(time=tchunk),False,resample_data)
         dplot=dplot.assign_coords(run=run)
-        dplot['time']=run_fit['time'][tchunk]
+        dplot['time']=run_slope['time'][tchunk]
         run_fit_regrid.append(dplot)            
     run_fit_regrid=xr.concat(run_fit_regrid,'run')
     run_fit_regrid.attrs.update(attrs)
