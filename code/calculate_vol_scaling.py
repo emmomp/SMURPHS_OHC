@@ -54,7 +54,7 @@ dx=dx.rename({'x':'i','y':'j','nav_lon':'longitude','nav_lat':'latitude'})
 # Calculate volume by basin and depth range for scaling
 basin_vol=[]
 basin_width=[]
-for basin in basins:
+for basin in basin_masks.keys():
     vol_fulld=vol.where(basin_masks[basin]).sum()
     vol_fulld['basin']=basin
     vol_fulld['lev_bins']='Full Depth'
