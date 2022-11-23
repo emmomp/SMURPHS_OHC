@@ -2,13 +2,13 @@
 [![DOI](https://zenodo.org/badge/461815488.svg)](https://zenodo.org/badge/latestdoi/461815488)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-This repositary contains python code and notebooks to accompany the manuscript "Ocean Heat Content responses to changing Anthropogenic Aerosol Forcing Strength: regional and multi-decadal variability" Boland et al 2022 ([pre-print](https://doi.org/10.1002/essoar.10511062.1)). The contents will allow for the reproduction of all tables and figures in the paper, as well the reproduction of the data files necessary for the figures. See below for more details.
+This repositary contains python code and notebooks to accompany the manuscript "Ocean Heat Content responses to changing Anthropogenic Aerosol Forcing Strength: regional and multi-decadal variability" Boland et al 2022 ([pre-print](https://doi.org/10.1002/essoar.10511062.3)). The contents will allow for the reproduction of all tables and figures in the paper, as well the reproduction of the data files necessary for the figures. See below for more details.
 
 Feel free to use or reproduce the code and figures but please attribute as outlined in the license.
 
 For more details on the SMURPHS ensemble, see Dittus et al. 2020 (https://doi.org/10.1029/2019GL085806)
 
-E Boland Aug 2022 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
+E Boland Nov 2022 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
 
 ## Requirements
 
@@ -66,7 +66,7 @@ To reproduce the data files required to produce the figures, follow these steps:
 The data files themselves are written to '../data_in' using the python scripts in [code](code/) as follows, listed by sub-directory:
 - ohc_tseries: ohc_by_basin_depth.py
 - pic_data: ohc_by_basin_depth_pic.py, ohc_pic_drift.py, ohc_xy_pic_drift.py, ohc_yz_pic_drift.py, ohc_xy_pic.py, ohc_yz_pic.py
-- ohc_trends: ohc_weightedtrends_obs.py, ohc_weightedtrends.py
+- ohc_trends: ohc_weightedtrends_obs.py, ohc_trends.py
 - ohc_xy: ohc_xy.py, ohc_xy_trends.py
 - ohc_yz: ohc_yz.py, ohc_yz_trends.py
 - amoc_tseries: calculate_AMOC.py
