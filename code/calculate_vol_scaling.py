@@ -31,6 +31,8 @@ masks=masks.isel(x=slice(1,-1),y=slice(1,-1))
 masks=masks.rename({'x':'i','y':'j'})
 volcello=xr.open_dataset('/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/historical/r1i1p1f3/Omon/volcello/gn/v20190624/volcello_Omon_HadGEM3-GC31-LL_historical_r1i1p1f3_gn_185001-189912.nc')
 vol=volcello['volcello'][0]
+areacello=xr.open_dataset('/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/piControl/r1i1p1f1/Ofx/areacello/gn/v20190709/areacello_Ofx_HadGEM3-GC31-LL_piControl_r1i1p1f1_gn.nc')
+area=areacello['areacello']
 
 depthlabels=['0-300m','300-700m','700-2000m','2km+']
 depthbins = [0,300,700,2000,6001]
@@ -68,7 +70,7 @@ basin_vol.name='basin_volume'
 basin_vol.attrs['units']='m^3'
 basin_vol.attrs['long_name']='Ocean Volume'
 basin_vol.attrs['description']='Summed volume of ocean cells by depth range and basin'
-surface_area=griddata['area'].where(griddata.thkcello.isel(lev=0).squeeze()>0).sum(['i','j'])
+surface_area=area.where(vol.isel(lev=0).squeeze()>0).sum(['i','j'])
 surface_area.name='surface_area'
 surface_area.attrs['units']='m^2'
 surface_area.attrs['long_name']='Ocean Surface Area'
