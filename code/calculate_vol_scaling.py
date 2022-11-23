@@ -80,7 +80,6 @@ scalings.attrs.update(attrs)
 scalings.to_netcdf(save_dir+'other_model_data/vol_scalings.nc')
 
 basin_width=xr.concat(basin_width,'basin',coords='minimal')
-ny=basin_width['y'].size
 basin_width=basin_width.rename({'z':'lev'})
 basin_width.attrs['units']='m'
 basin_width.attrs['long_name']='Basin Zonal Width'
