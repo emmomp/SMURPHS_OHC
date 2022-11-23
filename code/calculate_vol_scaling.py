@@ -65,7 +65,7 @@ for basin in basin_masks.keys():
     widthx=dx.where(basin_masks[basin]).sum(dim='i')
     widthx['basin']=basin
     basin_width.append(widthx)    
-basin_vol=xr.concat(basin_vol,'basin')
+basin_vol=xr.concat(basin_vol,'basin',coords='minimal')
 basin_vol.name='basin_volume'
 basin_vol.attrs['units']='m^3'
 basin_vol.attrs['long_name']='Ocean Volume'
