@@ -33,4 +33,4 @@ index_out.attrs.update(volc.attrs)
 index_out.attrs.update(attrs)
 index_out.attrs['description']='Volcanic Aerosol LW Absorption summed over latitude, model level, and waveband'
 
-index_out.to_netcdf(save_dir+'volc_index.nc')
+index_out.to_netcdf(save_dir+'other_model_data/volc_index.nc')
