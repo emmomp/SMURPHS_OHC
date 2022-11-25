@@ -3,7 +3,7 @@
 """
 calculate_vol_scaling.py
 
-Code to calculate the volume of the HegGEM3-GC3.1-LL model by basin and depth bin, and the zonal width of each basin.
+Code to calculate the volume of the HadGEM3-GC3.1-LL model by basin and depth bin, and the zonal width of each basin.
 
 Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
 See https://github.com/emmomp/SMURPHS_OHC for details
