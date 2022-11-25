@@ -1,4 +1,4 @@
-cftime==1.0.3.4
+dask==1.0.0
 numpy==1.15.4
 pandas==0.23.4
 pyresample==1.16.0
