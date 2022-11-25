@@ -44,8 +44,8 @@ To reproduce the figures, the notebooks will look for the following directories/
 - Figure 1 & Table 2: ohc_tseries, pic_data, other_model_data
 - Figure 2: ohc_tseries, pic_data, other_model_data
 - Figure 3: ohc_trends
-- Figures 4, S1, S2: ohc_xy
-- Figures 5, S3-S6: ohc_yz
+- Figures 4, S2, S3: ohc_xy
+- Figures 5, S4-S7: ohc_yz
 - Figure 6: ohc_xy
 - Figure 7: ohc_yz, other_model_data
 - Figure S1: pic_data
