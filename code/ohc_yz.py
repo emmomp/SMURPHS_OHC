@@ -30,8 +30,7 @@ save_dir = '../data_in/' #Directory to save data to
 
 data_dir = '/gws/nopw/j04/smurphs/E/adittus/MASS_download/ocean/data_andrea/' # Holding accessible via JASMIN
 
-griddata = xr.open_dataset(save_dir+'other_model_data/nemo_grid-T.nc')
-dx=griddata.e1t
+dx = xr.open_dataset(save_dir+'other_model_data/dx_nemo.nc')
 # Match up grid formats by removing NEMO halo and renaming coords
 dx=dx.isel(x=slice(1,-1),y=slice(1,-1)) 
 dx=dx.rename({'x':'i','y':'j','nav_lon':'longitude','nav_lat':'latitude'})

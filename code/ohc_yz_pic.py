@@ -29,8 +29,7 @@ attrs={'contact':'emmomp@bas.ac.uk',
 save_dir = '../data_in/' #Directory to save data to
 data_dir = '/badc/cmip6/data/CMIP6/CMIP/MOHC/HadGEM3-GC31-LL/piControl/r1i1p1f1/Omon' # Holding accessible via JASMIN
 
-griddata = xr.open_dataset(save_dir+'other_model_data/nemo_grid-T.nc')
-dx=griddata.e1t
+dx = xr.open_dataset(save_dir+'other_model_data/dx_nemo.nc')
 # Match up grid formats by removing NEMO halo and renaming coords
 dx=dx.isel(x=slice(1,-1),y=slice(1,-1)) 
 dx=dx.rename({'x':'i','y':'j','nav_lon':'longitude','nav_lat':'latitude'})

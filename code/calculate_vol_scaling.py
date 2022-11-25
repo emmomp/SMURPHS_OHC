@@ -46,8 +46,7 @@ basin_masks={
         'pac':masks.tmaskpac.astype(bool)
             }
 
-griddata = xr.open_dataset(save_dir+'other_model_data/nemo_grid-T.nc')
-dx=griddata.e1t.squeeze()
+dx = xr.open_dataset(save_dir+'other_model_data/dx_nemo.nc')
 dx=dx.where(dx>0)
 # Match up grid formats by removing NEMO halo and renaming coords
 dx=dx.isel(x=slice(1,-1),y=slice(1,-1)) 
