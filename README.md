@@ -17,12 +17,12 @@ To reproduce the paper's figures and tables:
 - cftime==1.0.3.4
 - matplotlib==3.0.2
 - numpy==1.15.4
-- scikit_learn==1.0.2
+- scikit_learn==1.1.3
 - scipy==1.1.0
 - xarray==0.11.0
 
 To reproduce the data from model output:
-- cftime==1.0.3.4
+- dask==1.0.0
 - numpy==1.15.4
 - pandas==0.23.4
 - pyresample==1.16.0
@@ -44,8 +44,8 @@ To reproduce the figures, the notebooks will look for the following directories/
 - Figure 1 & Table 2: ohc_tseries, pic_data, other_model_data
 - Figure 2: ohc_tseries, pic_data, other_model_data
 - Figure 3: ohc_trends
-- Figures 4, S1, S2: ohc_xy
-- Figures 5, S3-S6: ohc_yz
+- Figures 4, S2, S3: ohc_xy
+- Figures 5, S4-S7: ohc_yz
 - Figure 6: ohc_xy
 - Figure 7: ohc_yz, other_model_data
 - Figure S1: pic_data
