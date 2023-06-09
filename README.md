@@ -34,7 +34,7 @@ To reproduce the data from model output:
 
 To reproduce the paper's figures and tables, follow these steps:
 - Download the data required for the figures from the Figshare repository https://figshare.com/articles/dataset/data_in/19281761 and place in a directory named 'data_in'. Which data is required for which figures is listed below. Alternatively this data can be re-generated from the original model output using the python files in the [code](code/) directory - see "Steps to reproduce the paper's analysis from model output".
-- Install necessary libraries (see requirements above or [figure_notebooks/requirements,txt](figure_notebooks/requirements.txt)).
+- Install necessary libraries (see requirements above or [figure_notebooks/requirements.txt](figure_notebooks/requirements.txt)).
 - Clone the [figure_notebooks](figure_notebooks/) directory into the same directory that contains 'data_in'.
 - Run the notebooks.
 
