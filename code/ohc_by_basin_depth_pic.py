@@ -7,13 +7,15 @@ Code to load ocean temperature data from the PIC of HadEM3-GC31-LL
 calculate Ocean Heat Content integrals by basin and depth range for de-drifting
 SMURPHS ensemble. 
 
-Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
+Required to reproduce data for Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)
 See https://github.com/emmomp/SMURPHS_OHC for details
+
+Data files can be accessed as part of the badc CMIP6 holdings, see https://help.ceda.ac.uk/article/4801-cmip6-data for details
 
 For the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) 
 and for the CMIP6 historical ensemble, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995.
 
-Updated Nov 2022
+Updated Jun 2023
 
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
@@ -27,7 +29,7 @@ rho_0 = 1.027e3
 c_p = 3850
 
 attrs={'contact':'emmomp@bas.ac.uk',
-       'references':'HadGem3-GC31-LL PIC OHC data from Boland et al 2022 (https://www.essoar.org/doi/10.1002/essoar.10511062.3)',
+       'references':'HadGem3-GC31-LL PIC OHC data from Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of HadGem3-GC31-LL CMIP6 PIC data, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995'}
 

@@ -5,12 +5,12 @@ utils.py
 
 Functions required for the analysis of SMURPHS OHC data.
 
-Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
+Required to reproduce data for Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)
 See https://github.com/emmomp/SMURPHS_OHC for details
 
 For more details on the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806).
 
-Updated Nov 2022
+Updated Jun 2023
 
 @author: emmomp@bas.ac.uk Emma J D Boland
 """

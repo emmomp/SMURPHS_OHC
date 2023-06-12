@@ -6,13 +6,16 @@ ohc_by_basin_depth.py
 Code to load ocean temperature data from the SMURPHS ensemble model output and 
 calculate Ocean Heat Content integrals by basin and depth range. 
 
-Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
+Required to reproduce data for Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)
 See https://github.com/emmomp/SMURPHS_OHC for details
+
+thetao files can be found as part of the CEDA archive here: https://catalogue.ceda.ac.uk/uuid/5808b237bdb5485d9bc3595f39ce85e3
+volcello can be accessed as part of the badc CMIP6 holdings, see https://help.ceda.ac.uk/article/4801-cmip6-data for details
 
 For the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) 
 and for the CMIP6 historical ensemble, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995.
 
-Updated Nov 2022
+Updated Jun 2023
 
 @author: emmomp@bas.ac.uk
 """
@@ -26,13 +29,13 @@ rho_0 = 1.027e3 # Standard density
 c_p = 3850 # Heat capacity of sea water
 
 attrs={'contact':'emmomp@bas.ac.uk',
-       'references':'SMURPHS OHC data from Boland et al 2022 (https://www.essoar.org/doi/10.1002/essoar.10511062.3)',
+       'references':'SMURPHS OHC data from Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of the SMURPHS ensemble, See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806'}
 
 save_dir = '../data_in/' #Directory to save data to
 
-data_dir = '/gws/nopw/j04/smurphs/E/adittus/MASS_download/ocean/data_andrea/' # Holding accessible via JASMIN
+data_dir = '/gws/nopw/j04/smurphs/E/adittus/MASS_download/ocean/data_andrea/' # Path to thetao files
 
 masks=xr.open_dataset(save_dir+'other_model_data/subbasins_eORCA1-GO6-Daley.nc')
 # Match up grid formats by removing NEMO halo

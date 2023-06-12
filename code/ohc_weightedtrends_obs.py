@@ -6,7 +6,7 @@ ohc_weightedtrends_obs.py
 Code to load observed ocean heat content time series and calculate weighted
 linear trends, as part of analysis for Boland et al (in prep)
 
-Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
+Required to reproduce data for Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)
 See https://github.com/emmomp/SMURPHS_OHC for details
 
 Observation file IAP_OHC_estimate_update300m_700m_2000m.txt downloaded from http://159.226.119.60/cheng/ in Jan 2021
@@ -16,7 +16,7 @@ Observation files heat_content_anomaly_0-700_yearly.nc and heat_content_anomaly_
 downloaded from https://www.ncei.noaa.gov/products/world-ocean-atlas in Jul 2021
 see Boyer et al 2018 (https://accession.nodc.noaa.gov/NCEI-WOA18) for details.
 
-Updated Nov 2022
+Updated Jun 2023
 
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
@@ -29,12 +29,12 @@ from datetime import date
 save_dir = '../data_in/' #Directory to load from and save data to
 
 attrs_iap={'contact':'emmomp@bas.ac.uk',
-       'references':'Analysed OHC data from Boland et al 2022 (https://www.essoar.org/doi/10.1002/essoar.10511062.3)',
+       'references':'Analysed OHC data from Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of IAP data, see http://www.ocean.iap.ac.cn/'}
 
 attrs_noaa={'contact':'emmomp@bas.ac.uk',
-       'references':'Analysed OHC data from Boland et al (in prep)',
+       'references':'Analysed OHC data from Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis WOA 2018 data, see https://www.ncei.noaa.gov/products/world-ocean-atlas'}
 

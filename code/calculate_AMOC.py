@@ -5,12 +5,14 @@ calculate_AMOC.py
 
 Code to load atlantic streamfunction data from the SMURPHS ensemble model output and calculate time series AMOC at 45N.
 
-Required to reproduce data for Boland et al. 2022 (preprint https://www.essoar.org/doi/10.1002/essoar.10511062.3)
+Required to reproduce data for Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)
 See https://github.com/emmomp/SMURPHS_OHC for details
+
+zomsfatl files can be found as part of the CEDA archive here: https://catalogue.ceda.ac.uk/uuid/5808b237bdb5485d9bc3595f39ce85e3
 
 For the SMURPHS ensemble, see (See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806) and for the CMIP6 historical ensemble, Andrews et al. (2020) https://doi.org/10.1029/2019MS001995.
 
-Updated Nov 2022
+Updated Jun 2023
 
 @author: emmomp@bas.ac.uk Emma J D Boland
 """
@@ -20,13 +22,13 @@ from datetime import date
 import glob
 
 attrs={'contact':'emmomp@bas.ac.uk',
-       'references':'SMURPHS AMOC data from Boland et al 2022 (https://www.essoar.org/doi/10.1002/essoar.10511062.3)',
+       'references':'SMURPHS AMOC data from Boland et al. 2023 (https://doi.org/10.1029/2022JC018725)',
        'date':'Created on '+date.today().strftime("%d/%m/%Y"),
        'notes':'Data produced by analysis of the SMURPHS ensemble, See Dittus et al. 2020 https://doi.org/10.1029/2019GL085806'}
 
 save_dir = '../data_in/' #Directory to save data to
 
-data_dir = '/gws/nopw/j04/smurphs/E/adittus/MASS_download/ocean/data_andrea/' # Holding accessible via JASMIN
+data_dir = '/gws/nopw/j04/smurphs/E/adittus/MASS_download/ocean/data_andrea/' # Directory for zomsfatl data
 
 exps=['hist-0p2','hist-0p4','hist-0p7','hist-1p0','hist-1p5']
 runs=['r1i1p1f2','r2i1p1f2','r3i1p1f2','r4i1p1f2','r5i1p1f2']
