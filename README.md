@@ -2,13 +2,13 @@
 [![DOI](https://zenodo.org/badge/461815488.svg)](https://zenodo.org/badge/latestdoi/461815488)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-This repositary contains python code and notebooks to accompany the manuscript "Ocean Heat Content responses to changing Anthropogenic Aerosol Forcing Strength: regional and multi-decadal variability" Boland et al 2022 ([pre-print](https://doi.org/10.1002/essoar.10511062.3)). The contents will allow for the reproduction of all tables and figures in the paper, as well the reproduction of the data files necessary for the figures. See below for more details.
+This repositary contains python code and notebooks to accompany the manuscript "Ocean Heat Content responses to changing Anthropogenic Aerosol Forcing Strength: regional and multi-decadal variability" [Boland et al 2023](https://doi.org/10.1029/2022JC018725). The contents will allow for the reproduction of all tables and figures in the paper, as well the reproduction of the data files necessary for the figures. See below for more details.
 
 Feel free to use or reproduce the code and figures but please attribute as outlined in the license.
 
 For more details on the SMURPHS ensemble, see Dittus et al. 2020 (https://doi.org/10.1029/2019GL085806)
 
-E Boland Nov 2022 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
+E Boland Jun 2023 [emmomp@bas.ac.uk](mailto:emmomp@bas.ac.uk)
 
 ## Requirements
 
@@ -34,7 +34,7 @@ To reproduce the data from model output:
 
 To reproduce the paper's figures and tables, follow these steps:
 - Download the data required for the figures from the Figshare repository https://figshare.com/articles/dataset/data_in/19281761 and place in a directory named 'data_in'. Which data is required for which figures is listed below. Alternatively this data can be re-generated from the original model output using the python files in the [code](code/) directory - see "Steps to reproduce the paper's analysis from model output".
-- Install necessary libraries (see requirements above or [figure_notebooks/requirements,txt](figure_notebooks/requirements.txt)).
+- Install necessary libraries (see requirements above or [figure_notebooks/requirements.txt](figure_notebooks/requirements.txt)).
 - Clone the [figure_notebooks](figure_notebooks/) directory into the same directory that contains 'data_in'.
 - Run the notebooks.
 
